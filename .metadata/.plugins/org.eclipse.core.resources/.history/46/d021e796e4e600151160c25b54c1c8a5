@@ -1,0 +1,18 @@
+<?php
+
+
+$host = 'localhost';
+$user='talonarioadmin';
+$pass='WinnersClub';
+$db='talonarios';
+
+
+$dbc = new PDO("mysql:host=$host","dbname:$db",$user,$pass);
+
+$sql="SELECT * FROM student
+		JOIN enrollment AS enr ON enr.id = student.id
+		JOIN staccount AS sta ON sta.eid = enr.eid";
+
+$stmt
+
+?>

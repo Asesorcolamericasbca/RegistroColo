@@ -1,0 +1,39 @@
+<?php
+
+
+	$hostname = 'localhost';
+
+	$username = 'root';
+
+	$password = 'nutbuster';
+
+	
+try{
+	$dbh = new PDO("mysql:host=$hostname;dbname=talonarios", $username, $password);
+
+	echo 'connected to database';
+}
+catch(PDOException $e)
+{
+	echo $e->getMessage();
+}
+
+$sql="SELECT * FROM student
+		JOIN enrollment AS enr ON enr.id = student.id
+		JOIN staccount AS sta ON sta.eid = enr.eid";
+
+$stmt = $dbh->prepare($sql);
+
+$stmt->execute();
+
+foreach($stmt as $row)
+{
+	echo sizeof($row)."<br />";
+	echo "------------<br />";
+	echo $row["name"].' - '.$row["lname"].' - '.$row["grade"].' - '.$row["id"].' - '.$row["eid"].' - '.$row["aid"].' - '.$row["balance"].' - '.$row["num_talonario"].' - '.$row["lname"].'<br />';
+	echo "------------<br />";
+}
+
+$dbh = null;
+
+?>
