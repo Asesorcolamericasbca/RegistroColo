@@ -30,7 +30,7 @@ catch(PDOException $e)
 }
 
 
-
+/*
 $sql="SELECT * FROM student
 		JOIN enrollment AS enr ON enr.id = student.id
 		JOIN staccount AS sta ON sta.eid = enr.eid";
@@ -50,6 +50,7 @@ foreach($stmt as $row)
 }
 
 
+*/
 
 ?>
 
@@ -57,9 +58,11 @@ Add a new student: <br>
 
 name lastname grade talonario#
 
-<form action="welcome.php" method="post">
-Name: <input type="text" name="name"> <br>
-E-mail: <input type="text" name="email"> <br>
+<form action="namereg.php" method="post">
+Name <input type="text" name="name"> <br>
+Lname <input type="text" name="lname"> <br>
+talonario #<input type="number" name="talonario" min="1" max="9999"> <br>
+grade<input type="number" name="grade" min="0" max="12"> <br>
 <input type="submit">
 </form>
 
@@ -68,13 +71,64 @@ E-mail: <input type="text" name="email"> <br>
 
 <?php
 
-sta.balance = rate WHERE rate.grade = enr.grade
+$name = $_POST["name"];
+$lname = $_POST["lname"];
+$talonario = $_POST["talonario"];
+
+$grade = $_POST["grade"];
+$balance = 1; 
 
 
+if ($grade == 1){
+	$balance = 176025*10;
+}elseif ($grade == 2){
+	$balance = 169437*10;
+}elseif ($grade > 2 && $grade < 5){
+	$balance = 166260*10;
+}elseif ($grade > 4 && $grade < 10){
+	$balance = 200638*10;
+}elseif ($grade > 9 && $grade < 12){
+	$balance = 211499*10;	
+}
+
+
+
+
+$studentquery="INSERT INTO student (name, lname) VALUES (?,?)";
+$push=$dbh->prepare($studentquery);
+$push->execute(array($name,$lname));
+
+$push=NULL;
+
+$idquery="SELECT id FROM student WHERE name = ? AND lname = ?";
+$insertenrollment="INSERT INTO enrollment (id,grade) VALUES (($idquery),?)";
+$push=$dbh->prepare($insertenrollment);
+$push->execute(array($name,$lname,$grade));
+
+$push=NULL;
+
+$eidquery="SELECT eid FROM enrollment WHERE id = ($idquery) AND grade = ?";
+$insertstaccount="INSERT INTO staccount (eid,num_talonario,balance) VALUES (($eidquery),?,?)";
+$push=$dbh->prepare($insertstaccount);
+$push->execute(array($name,$lname,$grade,$talonario,$balance));
+
+$push = NULL;
+		
+
+
+echo $balance . ' ' . $grade;
+
+$balance = NULL;
+
+$grade = NULL;
 
 
 $dbh = NULL;
 
 ?>
+
+
+<a href="payreg.php">Click here to register payments</a>
+
 
 </body>
