@@ -131,7 +131,10 @@ $dbh = NULL;
 ?>
 
 
-<a href="payreg.php">Click here to register payments</a>
+<a href="payreg.php">Click here to register payments</a> <br/>
+
+<a href="talcheck.php">Click here to check if talonarios exist</a> <br/>
+
 
 
 </body>

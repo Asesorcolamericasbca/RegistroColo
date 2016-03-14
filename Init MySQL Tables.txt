@@ -1,5 +1,9 @@
 /* MYSQL SCRIPT */
 
+CREATE USER talonariosadmin@'localhost' IDENTIFIED BY 'WinnersClub';
+
+GRANT ALL PRIVILEGES ON talonarios.* TO talonariosadmin@'localhost';
+
 CREATE TABLE student (id INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(225) NOT NULL, lname VARCHAR(255) NOT NULL);
 
 CREATE TABLE enrollment (eid INT(11) AUTO_INCREMENT PRIMARY KEY, id INT(11) NOT NULL, grade INT(11) NOT NULL, FOREIGN KEY (id) REFERENCES student(id));
