@@ -1,0 +1,78 @@
+/* MYSQL SCRIPT */
+
+CREATE TABLE student (id INT(11) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(225) NOT NULL, lname VARCHAR(255) NOT NULL);
+
+CREATE TABLE enrollment (eid INT(11) AUTO_INCREMENT PRIMARY KEY, id INT(11) NOT NULL, grade INT(11) NOT NULL, FOREIGN KEY (id) REFERENCES student(id));
+
+CREATE TABLE staccount (aid INT(11) AUTO_INCREMENT PRIMARY KEY, eid INT(11) NOT NULL, num_talonario INT(11), balance NUMERIC(10,2) NOT NULL, FOREIGN KEY (eid) REFERENCES enrollment(eid));
+
+CREATE TABLE transaction (tid INT(11) AUTO_INCREMENT PRIMARY KEY, aid INT(11), amount NUMERIC(10,2) NOT NULL, paydate DATE NOT NULL, regdate DATE, FOREIGN KEY (aid) REFERENCES staccount (aid));
+
+CREATE TABLE rate (gid INT(11) AUTO_INCREMENT PRIMARY KEY, grade INT(11) NOT NULL, rate NUMERIC(10,2) NOT NULL, year INT(11) NOT NULL);
+
+
+############### Don't Know ###############3
+
+CREATE TRIGGER `transaction calculations`
+
+BEFORE INSERT ON transaction 
+
+FOR EACH ROW
+
+BEGIN
+
+SELECT 
+
+rate JOIN enrollment JOIN staccount JOIN NEW
+
+SELECT rate FROM rate 
+
+SELECT num_talonario FROM staccount WHERE staccount.aid = NEW.aid;
+
+/* Calculate new student account balance block */
+SELECT balance FROM staccount WHERE aid = NEW.aid INTO @var;
+SELECT @var - x INTO @newbalance;
+UPDATE staccount SET balance = @newbalance WHERE aid = NEW.aid;
+/* End new student account balance block*/
+
+/* Set payment registry date to current system date*/
+UPDATE transaction SET NEW.regdate = date(NOW());
+
+END;
+
+####################################33
+
+
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `New Balance Calc` AFTER INSERT ON `transaction` FOR EACH ROW BEGIN UPDATE staccount SET balance = (SELECT (SELECT balance FROM staccount) - NEW.amount); END
+
+
+
+
+^^ Didn't work
+
+
+
+
+
+BEGIN
+UPDATE staccount SET balance = (SELECT
+                                (SELECT balance
+                                 FROM staccount) -  (SELECT
+                                                     rate 
+                                                     FROM rate
+                                                     WHERE grade = ( 
+                                                         SELECT grade 
+                                                         FROM student AS stu 
+                                                         JOIN enrollment AS enr ON enr.id = stu.id 
+                                                         JOIN staccount AS sta ON sta.eid = enr.eid 
+                                                         WHERE num_talonario = (
+                                                             SELECT num_talonario 
+                                                             FROM staccount AS sta 
+                                                             WHERE sta.aid = NEW.aid
+                                                         )
+                                                     ) 
+                                                     WHERE aid = NEW.aid
+                                                     )
+                                 );
+END;

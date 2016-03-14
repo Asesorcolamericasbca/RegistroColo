@@ -74,7 +74,7 @@ WHERE num_talonario = ? )),? ,? )";
 
 try{
 //$dbh = new PDO("mysql:host=$host;dbname:$db",$user,$pass);
-$dbh = new PDO("mysql:host=127.0.0.1;dbname=talonarios", 'talonariosadmin', 'WinnersClub');
+$dbh = new PDO("mysql:host=127.0.0.1;dbname='talonarios'", 'talonariosadmin', 'WinnersClub');
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 echo 'connected to database';

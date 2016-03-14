@@ -14,7 +14,7 @@
 	
 	<?php echo "hello, world!". ' <br />'. ' <br />'. ' <br />'. ' <br />'. ' <br />';
 	
-	echo date("Y-m-d").'<br />';
+	echo date("Y-F-l").'<br />';
 	$today = date("Y-m-d");
 	echo $today .'<br />';
 	echo ' <br />'. ' <br />'. ' <br />'. ' <br />';
