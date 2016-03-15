@@ -35,13 +35,13 @@
 
 	$hostname = 'localhost';
 
-	$username = 'root';
+	$username = 'talonariosadmin';
 
-	$password = 'nutbuster';
+	$password = 'WinnersClub';
 
 	
 try{
-	$dbh = new PDO("mysql:host=$hostname;dbname=penv1", $username, $password);
+	$dbh = new PDO("mysql:host=$hostname;dbname=talonarios", $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
 
 	echo 'connected to database';
 }
@@ -53,7 +53,8 @@ catch(PDOException $e)
 
 
 
-	$sql = "SELECT * FROM `nombre`";
+	// $sql = "SELECT * FROM `nombre`";
+	$sql = "SELECT * FROM student AS stu JOIN enrollment AS enr ON enr.id = stu.id JOIN staccount AS sta ON sta.eid = enr.eid ORDER BY stu.id";
 
 	$stmt = $dbh->prepare($sql);
 
@@ -75,7 +76,8 @@ $stmt->execute();
 {
 echo sizeof($row)."<br />";
 echo "------------<br />";
-echo $row["cod_nom"].' - '.$row["nombre"].'<br />';
+//echo $row["cod_nom"].' - '.$row["nombre"].'<br />';
+echo $row["id"].' - '.$row["name"].' - '.$row["lname"].' - '.$row["grade"].' - '.$row["balance"].' - '.$row["num_talonario"].' - '.$row["eid"].' - '.$row["aid"].'<br />';
 echo "------------<br />";
 }
 
