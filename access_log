@@ -1436,3 +1436,26 @@
 127.0.0.1 - - [14/Mar/2016:00:44:07 -0500] "POST /phpmyadmin/lint.php HTTP/1.1" 200 28
 127.0.0.1 - - [14/Mar/2016:00:44:51 -0500] "GET /phpmyadmin/sql.php?db=talonarios&table=transaction&token=24e0429ec0bd7496fd1b54c1d3b891da&sql_query=DROP+TRIGGER+IF+EXISTS+%60New+Balance+Calc%60&goto=db_triggers.php%3Fdb%3Dtalonarios&is_js_confirmed=1&ajax_request=true&_nocache=1457934291580760234 HTTP/1.1" 200 1881
 127.0.0.1 - - [14/Mar/2016:00:44:51 -0500] "POST /phpmyadmin/navigation.php?ajax_request=1&token=24e0429ec0bd7496fd1b54c1d3b891da HTTP/1.1" 200 2803
+127.0.0.1 - - [15/Mar/2016:23:52:34 -0500] "GET / HTTP/1.1" 200 43240
+127.0.0.1 - - [15/Mar/2016:23:52:40 -0500] "GET /talcheck.php HTTP/1.1" 200 30599
+127.0.0.1 - - [15/Mar/2016:23:53:25 -0500] "-" 408 -
+127.0.0.1 - - [15/Mar/2016:23:53:26 -0500] "GET /talcheck.php HTTP/1.1" 200 21749
+127.0.0.1 - - [16/Mar/2016:00:31:24 -0500] "GET /talcheck.php HTTP/1.1" 200 793
+127.0.0.1 - - [16/Mar/2016:00:32:18 -0500] "GET /talcheck.php HTTP/1.1" 200 752
+127.0.0.1 - - [16/Mar/2016:00:32:30 -0500] "POST /talcheck.php HTTP/1.1" 200 318
+127.0.0.1 - - [16/Mar/2016:00:32:50 -0500] "POST /talcheck.php HTTP/1.1" 200 359
+127.0.0.1 - - [16/Mar/2016:00:33:02 -0500] "POST /talcheck.php HTTP/1.1" 200 359
+127.0.0.1 - - [16/Mar/2016:00:35:42 -0500] "POST /talcheck.php HTTP/1.1" 200 403
+127.0.0.1 - - [16/Mar/2016:00:36:38 -0500] "POST /talcheck.php HTTP/1.1" 200 404
+127.0.0.1 - - [16/Mar/2016:00:37:31 -0500] "POST /talcheck.php HTTP/1.1" 200 385
+127.0.0.1 - - [16/Mar/2016:00:39:38 -0500] "POST /talcheck.php HTTP/1.1" 200 416
+127.0.0.1 - - [16/Mar/2016:00:40:17 -0500] "POST /talcheck.php HTTP/1.1" 200 407
+127.0.0.1 - - [16/Mar/2016:00:41:19 -0500] "POST /talcheck.php HTTP/1.1" 200 413
+127.0.0.1 - - [16/Mar/2016:00:41:28 -0500] "POST /talcheck.php HTTP/1.1" 200 413
+127.0.0.1 - - [16/Mar/2016:00:41:44 -0500] "POST /talcheck.php HTTP/1.1" 200 413
+127.0.0.1 - - [16/Mar/2016:00:44:14 -0500] "POST /talcheck.php HTTP/1.1" 200 509
+127.0.0.1 - - [16/Mar/2016:00:44:27 -0500] "POST /talcheck.php HTTP/1.1" 200 516
+127.0.0.1 - - [16/Mar/2016:00:44:54 -0500] "POST /talcheck.php HTTP/1.1" 200 516
+127.0.0.1 - - [16/Mar/2016:00:50:32 -0500] "POST /talcheck.php HTTP/1.1" 200 573
+127.0.0.1 - - [16/Mar/2016:00:51:17 -0500] "POST /talcheck.php HTTP/1.1" 200 628
+127.0.0.1 - - [16/Mar/2016:00:52:54 -0500] "POST /talcheck.php HTTP/1.1" 200 662
