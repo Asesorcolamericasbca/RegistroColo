@@ -15,18 +15,6 @@ $user='talonariosadmin';
 $pass='WinnersClub';
 $db='talonarios';
 
-try{
-	//$dbh = new PDO("mysql:host=$host;dbname:$db",$user,$pass);
-	$dbh = new PDO("mysql:host=127.0.0.1;dbname=talonarios", 'talonariosadmin', 'WinnersClub', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	echo 'connected to database <br />';
-}
-catch(PDOException $e)
-{
-	echo $e->getMessage();
-}
-
 ?>
 
 
@@ -44,6 +32,12 @@ NOTE: ADD TALONARIO NUMBER REGISTRATION
 
 <?php
 
+if(!$_POST){
+	
+	echo"Nothing yet".'<br />';
+
+} else {
+
 $name = $_POST["name"];
 $lname = $_POST["lname"];
 $grade = $_POST["grade"];
@@ -53,10 +47,19 @@ $lname = "%$lname%";
 
 //echo $name;
 
+try{
+	//$dbh = new PDO("mysql:host=$host;dbname:$db",$user,$pass);
+	$dbh = new PDO("mysql:host=127.0.0.1;dbname=talonarios", 'talonariosadmin', 'WinnersClub', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if(!$name || !$lname || !$grade){
+	echo 'connected to database <br />';
+}
+catch(PDOException $e)
+{
+	echo $e->getMessage();
+}
 
-} else {
+
 
 	$studentidquery = "SELECT id,name,lname 
 	FROM student 
@@ -157,6 +160,10 @@ echo $row["name"].' - '.$row["lname"].' - '.$row["grade"].' - '.$row["num_talona
 echo "------------<br />";
 }
 */
+
+$name = NULL;
+$lname = NULL;
+$grade = NULL;
 
 $dbh = null;
 

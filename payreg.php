@@ -36,11 +36,18 @@ Pay Date<input type="date" name="paydate"> <br>
 
 <?php 
 
-$talonario_num = $_POST["talonario"];
-$paydate = $_POST["paydate"];
+if(!$_POST){
+	
+	echo 'Nothing yet'.'<br />'.'<br />';
+	
+} else {
+		
+	$talonario_num = $_POST["talonario"];
+	$paydate = $_POST["paydate"];
 
-echo $talonario_num . '<br / >';
-echo $paydate . '<br / >';
+
+	echo $talonario_num . '<br / >';
+	echo $paydate . '<br / >';
 
 
 try{
@@ -114,6 +121,8 @@ $today = date("Y-m-d");
 
 echo $today  . '<br / >';
 
+}
+
 /*
 
 $gradesql = "SELECT grade FROM student AS stu 
@@ -150,6 +159,21 @@ $exec->bindParam(':transamount', $amount, PDO::PARAM_INT);
 $exec->bindParam(':paydate', $paydate, PDO::PARAM_STR);
 $exec->bindParam(':regdate', $today, PDO::PARAM_STR);
 $exec->execute();
+
+
+
+// ######################
+// ## Null out values ###
+
+	$talonario_num = NULL;
+	$paydate = NULL;
+	
+// ######################
+// ######################
+
+
+/* END OF SCRIPT */
+
 
 // ########################################
 
@@ -269,6 +293,7 @@ $dbh = null;
 ?>
 
 <a href="namereg.php">Click here to register names</a>
+<a href="talcheck.php">Click here to search for talonario numbers</a>
 
 
 </body>

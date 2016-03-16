@@ -70,6 +70,10 @@ echo $row["cod_nom"].' - '.$row["nombre"].'<br />';
 echo "------------<br />";
 }*/
 
+
+
+/* DB ALL ROWS RETURN TEST BLOCK */
+/*
 $stmt->execute();
 
 	foreach($stmt as $row)
@@ -80,6 +84,7 @@ echo "------------<br />";
 echo $row["id"].' - '.$row["name"].' - '.$row["lname"].' - '.$row["grade"].' - '.$row["balance"].' - '.$row["num_talonario"].' - '.$row["eid"].' - '.$row["aid"].'<br />';
 echo "------------<br />";
 }
+*/
 
 $dbh = null;
 
@@ -150,6 +155,26 @@ $dbh = null;
 Calendar button on date bar <br />
 Automatic date of registry on today by default <br />
 Student profiles with registro civil scan associated <br />
+<br />
+<br />
+<br />
+<p>TODO: <ul> <li>ADD TRANSACTION REPORT SPACE TO STUDENT ACCOUNTS PAGE <br/>
+AND ENABLE REVIEW BY YEAR AFTER ENROLLING FOR MORE THAN 1</li><br/>
+<li>ADD TALONARIOS REGISTRATION FUNCTION </li>
+</ul>
+</p>
+
+<table border>
+<tr>
+<td>
+Here's a hint for the month and date arrangements: <br/><br/>
+<?php echo 'SELECT * <br/>
+  FROM table <br/>
+ WHERE amount > 1000 <br/>
+   AND MONTH(dateStart) = {$m}';?>
+   </td>
+   </tr>
+</table>
 
 
 

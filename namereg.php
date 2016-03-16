@@ -71,6 +71,12 @@ grade<input type="number" name="grade" min="0" max="12"> <br>
 
 <?php
 
+ if(!$_POST){
+ 	echo "Nothing Yet".'<br />';
+ }
+ 
+ else {
+
 $name = $_POST["name"];
 $lname = $_POST["lname"];
 $talonario = $_POST["talonario"];
@@ -122,11 +128,15 @@ $push = NULL;
 echo $balance . ' ' . $grade;
 
 $balance = NULL;
-
 $grade = NULL;
+$name = NULL;
+$lname = NULL;
+$talonario = NULL;
 
 
 $dbh = NULL;
+
+ }
 
 ?>
 
