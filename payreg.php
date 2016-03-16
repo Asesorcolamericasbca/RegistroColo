@@ -121,7 +121,7 @@ $today = date("Y-m-d");
 
 echo $today  . '<br / >';
 
-}
+
 
 /*
 
@@ -289,6 +289,8 @@ foreach($stmt as $row)
 */
 
 $dbh = null;
+
+}
 
 ?>
 
