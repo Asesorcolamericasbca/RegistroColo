@@ -11,6 +11,11 @@
 	hey there! <br />
 	
 	<a href="namereg.php">click here to add new people!</a> <br />
+	<br />
+	<br />
+	<p><a href="payreg.php">Click here to register payments</a></p>
+	<p><a href="talcheck.php"> click here to check talonario numbers and student account numbers</p>
+	<p></p>
 	
 	<?php echo "hello, world!". ' <br />'. ' <br />'. ' <br />'. ' <br />'. ' <br />';
 	
