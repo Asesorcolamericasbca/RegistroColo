@@ -41,8 +41,11 @@ if(!$_POST){
 	echo 'Nothing yet'.'<br />'.'<br />';
 	
 } else {
+	if($_GET){
 		
-	$talonario_num = $_POST["talonario"];
+	} else {
+		$talonario_num = $_POST["talonario"];
+	}
 	$paydate = $_POST["paydate"];
 
 
@@ -52,7 +55,7 @@ if(!$_POST){
 
 try{
 	//$dbh = new PDO("mysql:host=$host;dbname:$db",$user,$pass);
-	$dbh = new PDO("mysql:host=127.0.0.1;dbname=talonarios", 'talonariosadmin', 'WinnersClub');
+	$dbh = new PDO("mysql:host=127.0.0.1;dbname=talonarios", 'talonariosadmin', 'WinnersClub', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	echo 'connected to database <br />';
@@ -294,8 +297,10 @@ $dbh = null;
 
 ?>
 
-<a href="namereg.php">Click here to register names</a>
-<a href="talcheck.php">Click here to search for talonario numbers</a>
+<a href="namereg.php">Click here to register names</a> <br>
+<a href="talcheck.php">Click here to search for talonario numbers</a><br><br>
+
+<a href="ReviewPayments.php">Click here to check student accounts</a>
 
 
 </body>
