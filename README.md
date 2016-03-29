@@ -11,8 +11,9 @@ a work around to keep identities unique so payments can be put through quick and
 <li>Add a multiplier box to select how many months are being paid for with default value = 1</li>
 <li>Add an optional custom value box to the payment page</li>
 <li>Make an include file that will port all the necessary variables that are frequently used</li>
-<li></li>
 <li>Make a display for pending student payments and a summary for total payment of a given month</li>
+<li>Upgrade the payments page to display a list of students from a range of talonario <br> numbers, and to then be able to register several payments at once through the list</li>
+<li></li>
 </ul> <br> <br>
 
 <ul>
