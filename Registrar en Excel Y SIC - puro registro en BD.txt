@@ -1,0 +1,103 @@
+###### This file must be completely ported into the Excel and SIC systems. Everything here has been registered using the database.
+###### There may be some redundancy because several payments were already registered in the old system, but not the new one.
+######################
+###################### BEGIN LOG BLOCK ################
+
+(All transactions dated 2016/03/28 - 2016/03/29)
+
+Angelica Paola Nova	11	Abr
+Jhoan Mahecha		8	Mar
+Juan David Rodriguez Moreno	11	Mar
+Paola Andrea Rodriguez MOreno	11	Mar
+Javier Andres Chinchilla	9	Mar
+Yoiner Adrian Ariza	7	Feb y Mar
+Brayan Blanco Mira	7	feb y Mar
+Kenji Lee Ching Prada	7	Abr
+Marlon Julian Garcia	10	Mar
+Diego Andres Mosquera	10	Mar
+Yuen Lee Ching Prada	10	Abr
+BAYONA CORTEZ PAULA ANDREA - 8	Mar
+HOYOS LAVERDE - LUZ ADRIANA - 10 Mar
+NOVA BUSTAMANTE - OMAR FREDDY - 8 Abr
+VERGARA VEGA - CARLOS DANIEL - 8 Mar
+GUTIERREZ PADILLA - DANIELA - 8 Abr
+GUTIERREZ BERMEO - JUAN DIEGO - 11 Feb y Mar
+GOMEZ TRIANA - PAULA SOFIA - 4 Feb y Mar
+BAYONA CORTEZ - JOSE DAVID - 6 Mar
+BOHORQUEZ QUIROGA - HELEN GIOVANA - 6 Feb Mar Abr
+RICO ACEROS - NATHALIA - 8 Mar
+VARGAS LOPEZ - ANDRES FELIPE - 6 Mar
+ALVAREZ ROMERO - KEYNER ANDRES - 5 Mar
+FAJARDO VESGA - NICOLE ANDREA - 5 Feb
+GOMEZ REY - DANIELA - 7 Mar
+VARGAS FONTALVO - LUISA FERNANDA - 7  Mar
+CORREDOR - DANIEL FERNANDO - 7 Mar
+TORRES RESTREPO - DHANNA MELISSA - 6 Feb y Mar
+GIRALDO CASTILLO - JUAN DAVID - 3 Mar
+MARTINEZ HERRERA - JUAN NICOLAS - 8 Mar
+SERRANO BARROSO - KEVIN FERNANDO - 8 Mar
+BELTRAN RODRIGUEZ - JADER ANDRES - 3 Mar
+GARCIA HOYOS - JHON JAIRO - 10 Mar, Abr
+ORTIZ BAEZA - EMMANUEL - 2 Mar
+ORTIZ BAEZA - JAVIER SANTIAGO - 6 Mar
+JAIMES ARDILA - CRISTIAN MANUEL - 11 Mar-Nov
+PICO LOZANO - BRAYAN ESNEIDER - 11 Mar
+VERGARA SALAS - DANIELA BEATRIZ - 9 Mar
+BOHORQUEZ BALAGUERA - JUAN SEBASTIAN - 9 Mar
+NOSSA GAMBOA - LEIDY TATIANA - 10 Feb y Mar
+QUIJANO CONTRERAS - JUAN FELIPE - 10 - Mar y Abr
+COLEY CORTINA - HANNS ENRIQUE - 10 Feb y Mar
+NAVARRO GUERRERO - BRAYAN ANDRÉS - 10 Mar
+PATIÑO ANGARITA - VALENTINA - 11 Mar
+RUEDA DIAZ - JERSON ANDRÉS - 10 Feb y Mar
+GIL GIL - GIOVANNI ANDRÉS - 11 Mar
+MUÑOZ GARCÍA - JHORGI LEANDRO - 10 Mar
+OSPINA ARREDONDO - SEBASTIAN - 5 Mar
+PRADA RIOS - ANDRÉS JULIÁN - 10 Abr
+
+
+
+
+
+
+
+
+
+#############################
+
+Check for dupe talonarios 
+
+SELECT *,COUNT(num_talonario) c FROM `staccount` GROUP BY num_talonario HAVING c > 1
+
+
+
+List conflicting accounts
+
+SELECT stu.name,stu.lname,enr.grade,enr.eid,staccount.aid,staccount.num_talonario,staccount.balance FROM `staccount` 
+JOIN enrollment AS enr ON enr.eid = staccount.eid
+JOIN student AS stu ON stu.id = enr.id
+WHERE num_talonario = 1255 OR num_talonario = 1376 OR num_talonario = 1772
+ORDER BY num_talonario
+
+
+
+
+Current Problem accounts
+
+(Ospina Arredondo and Vargas Lopez are in conflict, but their account data is fine.)
+(Herrera Ospina absorbed all of Otero Vila's Payments)
+
+
+name		lname			grade	eid	aid	num_talonario		balance	
+SEBASTIAN	OSPINA ARREDONDO	5	591	1091	1255			1605104.00
+
+ANDRES FELIPE	VARGAS LOPEZ		6	622	1122	1255			1605104.00
+
+MIGUEL ANDRES	HERRERA OSPINA		4	562	1062	1376			831300.00
+
+MIGUEL ANGEL	OTERO VILA		9	773	1273	1376			2006380.00
+
+NICOLE ANDREA	FAJARDO VESGA		5	583	1083	1772			1805742.00
+
+DAYAN HERBET	MORA DIAZ		11	832	1332	1772			1691992.00
+

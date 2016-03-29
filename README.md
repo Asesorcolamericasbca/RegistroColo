@@ -4,6 +4,18 @@ Talonarios
 TODO
 
 <ul>
+<li>Add talonario Dupe check reporter</li>
+<li>Fix talonario collision bug and make it throw an exception if there's a repeat<br/>
+if the school's admin is so bad that there are real life dupes, then make <br/>
+a work around to keep identities unique so payments can be put through quick and easy</li>
+<li>Add a multiplier box to select how many months are being paid for with default value = 1</li>
+<li>Add an optional custom value box to the payment page</li>
+<li>Make an include file that will port all the necessary variables that are frequently used</li>
+<li></li>
+<li>Make a display for pending student payments and a summary for total payment of a given month</li>
+</ul> <br> <br>
+
+<ul>
 <li>Add transaction report space to student accounts page and enable review by year after having been enrolled for more than 1 year</li>
 <li>Add talonarios registration function</li>
 <li>Add Gender Column and assign genders to students via name search script</li>
