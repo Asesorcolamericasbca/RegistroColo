@@ -1,5 +1,7 @@
 <?php
 
+include ('vars.php');
+/*
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -19,9 +21,9 @@ catch(PDOException $e)
 {
 	echo $e->getMessage();
 }
-
+*/
 ?>
-
+<!--
 <form action="ReviewPayments.php" method="post">
 Talonario <input type="text" name="Talonario" autofocus> <br>
 Grade <input type="text" name="Grade"> <br>
@@ -35,10 +37,92 @@ Grade <input type="text" name="Grade"> <br>
 
 <br><br>
 
+ -->
+
 <?php 
 
 if($_POST){
 	
+	$aid = $_POST['aid'];
+	
+	$sqlbalance="
+			SELECT balance FROM ".$sta."WHERE aid = :aid";
+	
+	$exec=$dbh->prepare($sqlbalance);
+	$exec->bindParam(':aid', $aid, PDO::PARAM_INT);
+	$exec->execute();
+	
+	$balance = $exec->fetchColumn();
+	
+	echo "Current balance: ".$balance.'<br><br><br>';
+	
+	
+	$sql="
+		SELECT sta.aid,stu.lname,stu.name,enr.grade,sta.num_talonario,tra.amount,tra.paydate,tra.regdate
+		FROM ".$tra.
+		$joinstatotra.
+		$joinenrtosta.
+		$joinstutoenr."
+		WHERE tra.aid = :aid";
+	
+	$exec=$dbh->prepare($sql);
+	$exec->bindParam(':aid', $aid, PDO::PARAM_INT);
+	$exec->execute();
+	
+	
+	$counter = 1;
+	
+	echo '<table>';
+		
+		echo '<tr style=font-weight:bold>
+			<td></td>
+			<td> aid </td>
+			<td> lname </td>
+			<td> name </td>
+			<td> grade </td>
+			<td> num_talonario </td>
+				<td> amount </td>
+				<td> paydate </td>
+				<td> regdate </td>
+			</tr>';
+		
+		foreach($exec as $row)
+		{
+			
+			echo '<tr>
+					<td style=font-weight:bold>'.$counter.'</td>';
+			echo	'<td>'.$row["aid"].'</td>';
+			echo	'<td>'.$row["lname"].'</td>
+				<td>'.$row["name"].'</td>
+				<td>'.$row["grade"].'</td>
+				<td>'.$row["num_talonario"].'</td>
+						<td>'.$row["amount"].'</td>
+								<td>'.$row["paydate"].'</td>
+										<td>'.$row["regdate"].'</td>
+			</tr>';
+			$counter+=1;
+		}
+	
+	echo '<h3>Register Payment</h3>';
+	echo '<form id="form" action="Payregexecute.php" method="post">
+			<input type="hidden" name="eid" value="'.$_POST['eid'].'">
+			<input type="hidden" name="aid" value="'.$_POST['aid'].'">
+			<input type="hidden" name="date" value="'.$_POST['date'].'">
+			<br> <input id="next" type="submit">
+			</form>
+				
+			<script>
+			document.getElementById("next").focus();
+			</script>';	
+	  
+	
+	echo '<a href="payreg.php"> check another</a><br><br>';
+	
+	
+	}
+
+	
+	/*
 	$num_talonario = $_POST['Talonario'];
 	$grade = $_POST['Grade'];
 	
@@ -99,13 +183,15 @@ if($_POST){
 		echo "------------<br />";
 	}
 	
+	*/
+	
 	$exec = null;
 	
 	
 	$dbh = null;
 	
 	
-}
+//}
 	
 	
 	?>
