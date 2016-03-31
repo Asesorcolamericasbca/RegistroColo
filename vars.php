@@ -1,25 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$host='localhost';
-$user='talonariosadmin';
-$pass='WinnersClub';
-$db='talonarios';
-
-try{
-	//$dbh = new PDO("mysql:host=$host;dbname:$db",$user,$pass);
-	$dbh = new PDO("mysql:host=127.0.0.1;dbname=talonarios", 'talonariosadmin', 'WinnersClub', array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	$msg= 'connected to database <br />';
-}
-catch(PDOException $e)
-{
-	$dhb=null;
-	$msg= $e->getMessage();
-}
+include('dbcreds.php');
 
 $sta=" staccount AS sta ";
 
@@ -43,13 +24,131 @@ $joinstatotra=" JOIN ".$sta." ON sta.aid = tra.aid ";
 
 
 
-$sqltest="SELECT * FROM ".$stu;
 
+
+
+
+toaidfromid
+
+toaidfromeid
+
+toaidfromtid
+
+toaidfromnumtal
+
+totidfromid
+
+totidfromeid
+
+totidfromaid
+
+totidfromnumtal
+
+toaidfromid
+
+toaidfromeid
+
+toaidfromtid
+
+toaidfromnumtal
+
+
+
+// :op = {<,>,=,<=,>=,LIKE}
+
+/*
+matchid=" WHERE id :op :id ";
+
+matcheid=" WHERE eid :op :eid ";
+
+matchaid=" WHERE aid :op :aid ";
+
+matchnumtal=" WHERE num_talonario :op :numtal ";
+
+matchname=" WHERE regdate :op :name ";
+
+matchlname=" WHERE regdate :op :lname ";
+
+matchbalance=" WHERE regdate :op :balance ";
+
+matchpaydate=" WHERE regdate :op :paydate ";
+
+matchregdate=" WHERE regdate :op :regdate ";
+*/
+
+
+
+/* commonsqls
+
+get name, lname, id, eid, num_talonario, balance, amount, aid, 
+
+namefromid
+
+namefromeid
+
+namefromaid
+
+fnamefromid
+
+fnamefromeid
+
+fnamefromaid
+
+lnamefromid
+
+lnamefromeid
+
+lnamefromaid
+
+transactionfromid
+
+transactionfromaid
+
+transactionfromeid
+
+staccountfromid
+
+staccountfromeid
+
+staccountfromaid
+
+yearfromid
+
+yearfromeid
+
+yearfromaid
+
+gradefromid
+
+gradefromeid
+
+gradefromaid
+
+balancefromid
+
+balancefromeid
+
+balancefromaid
+
+talonariofromid
+
+talonariofromeid
+
+talonariofromaid
+
+
+
+
+*/
+
+
+//$sqltest="SELECT * FROM ".$stu;
+/*
 $sqltest1="SELECT * ".
 	"FROM ".$sta.
 	$joinenrtosta.
 	$joinstutoenr;
-			
+	*/		
 			
 /*
 $sqlgetaid="SELECT aid FROM".$sta;
