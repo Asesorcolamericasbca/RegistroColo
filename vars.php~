@@ -139,17 +139,17 @@ talonariofromaid
 
 
 
-/* */
+*/
 
 
 //$sqltest="SELECT * FROM ".$stu;
-
+/*
 $sqltest1="SELECT * ".
 	"FROM ".$sta.
 	$joinenrtosta.
 	$joinstutoenr;
-		
-/* */		
+	*/		
+			
 /*
 $sqlgetaid="SELECT aid FROM".$sta;
 

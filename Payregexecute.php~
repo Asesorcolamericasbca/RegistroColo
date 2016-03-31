@@ -57,7 +57,7 @@ if(!$_POST){
 	
 	echo "today = ". $today  . '<br / >';
 	
-	
+/*	
 	$sqlinsert="INSERT INTO `transaction` (aid,amount,paydate,regdate) 
 			VALUES (:staaid, :transamount,:paydate, :regdate)";
 

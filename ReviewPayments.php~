@@ -231,7 +231,6 @@ if($_POST){
 			<input type="hidden" name="eid" value="'.$eid.'">
 			<input type="hidden" name="aid" value="'.$aid.'">
 			<input type="hidden" name="date" value="'.$date.'">
-			<input type="hidden" name="grade" value="'.$grade.'">
 			<input type="number" name="amount" value="'.$amount.'">
 			<br> <input id="next" type="submit">
 			</form>
