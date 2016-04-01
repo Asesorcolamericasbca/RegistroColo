@@ -221,6 +221,9 @@ if($_POST){
 		$amount = 211499;
 	}
 	
+	
+	$months=1;
+	
 //	echo 'amount is: '.$amount.'<br>';
 	
 	echo '<h3>Register Payment</h3>';
@@ -232,7 +235,11 @@ if($_POST){
 			<input type="hidden" name="aid" value="'.$aid.'">
 			<input type="hidden" name="date" value="'.$date.'">
 			<input type="hidden" name="grade" value="'.$grade.'">
-			<input type="number" name="amount" value="'.$amount.'">
+			<table>
+			<tr><td>Amount</td><td>Months (Qty)</td></tr>
+			<td><input type="number" name="amount" value="'.$amount.'"></td>
+			<td><input type="number" name="months" value="'.$months.'" min="1" max="10"></td>
+			</table>
 			<br> <input id="next" type="submit">
 			</form>
 				

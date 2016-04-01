@@ -10,6 +10,9 @@ if(!$_POST){
 	echo 'Nothing yet'.'<br />'.'<br />';
 
 } else {
+	
+	$amount = $_POST['amount']*$_POST['months'];
+	
 	$counter=0;
 	$date=$_POST['date'];
 	
@@ -31,7 +34,7 @@ if(!$_POST){
 	
 	$exec = null;
 /**/	
-	$amount = $_POST['amount'];
+	
 /*	
 	$amount = 1;
 	

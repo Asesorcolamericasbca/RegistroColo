@@ -44,9 +44,9 @@ $sql="  SELECT sta.aid,stu.lname,stu.name,enr.grade,sta.num_talonario,tra.amount
 			<td> name </td>
 			<td> grade </td>
 			<td> num_talonario </td>
-				<td> amount </td>
-				<td> paydate </td>
-				<td> regdate </td>
+			<td> amount </td>
+			<td> paydate </td>
+			<td> regdate </td>
 			</tr>';
 		
 		foreach($exec as $row)
@@ -58,13 +58,13 @@ $sql="  SELECT sta.aid,stu.lname,stu.name,enr.grade,sta.num_talonario,tra.amount
 					<td style=font-weight:bold>'.$counter.'</td>';
 			echo	'<td>'.$row["aid"].'</td>';
 			echo	'<td>'.$row["lname"].'</td>
-				<td>'.$row["name"].'</td>
-				<td>'.$row["grade"].'</td>
-				<td>'.$row["num_talonario"].'</td>
-						<td>'.$row["amount"].'</td>
-								<td>'.$row["paydate"].'</td>
-										<td>'.$row["regdate"].'</td>
-			</tr>';
+					<td>'.$row["name"].'</td>
+					<td>'.$row["grade"].'</td>
+					<td>'.$row["num_talonario"].'</td>
+					<td>'.$row["amount"].'</td>
+					<td>'.$row["paydate"].'</td>
+					<td>'.$row["regdate"].'</td>
+				</tr>';
 			$counter+=1;
 		
 		}

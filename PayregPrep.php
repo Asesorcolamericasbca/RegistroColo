@@ -83,7 +83,7 @@ if(!$_POST){
 	
 	} else {
 		echo 'that talonario doesn\'t seem registered yet, would you like to
-				<a href="talcheck.php">fix that</a> now?';
+				<a id="next" href="talcheck.php">fix that</a> now?';
 	}
 	
 	
