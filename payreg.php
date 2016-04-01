@@ -22,7 +22,7 @@ Pay Date<input type="date" name="paydate"> <br>
 
 <script>
 			document.getElementById("next").focus();
-			</script>';	
+			</script>	
 
 </body>
 

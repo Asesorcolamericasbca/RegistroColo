@@ -14,7 +14,7 @@
 	<br />
 	<br />
 	<p><a href="payreg.php">Click here to register payments</a></p>
-	<p><a href="talcheck.php"> click here to check talonario numbers and student account numbers</p>
+	<p><a href="talcheck.php"> click here to check talonario numbers and student account numbers</a></p>
 	<p></p>
 	
 	<?php echo "hello, world!". ' <br />'. ' <br />'. ' <br />'. ' <br />'. ' <br />';
@@ -163,13 +163,13 @@ Student profiles with registro civil scan associated <br />
 <br />
 <br />
 <br />
-<p>TODO: <ul> <li>ADD TRANSACTION REPORT SPACE TO STUDENT ACCOUNTS PAGE <br/>
-AND ENABLE REVIEW BY YEAR AFTER ENROLLING FOR MORE THAN 1</li><br/>
-<li>ADD TALONARIOS REGISTRATION FUNCTION </li>
+<p>TODO: </p> <ul> <li>ADD TRANSACTION REPORT SPACE TO STUDENT ACCOUNTS PAGE <br/>
+AND ENABLE REVIEW BY YEAR AFTER ENROLLING FOR MORE THAN 1</li>
+<li style=margin-top:15px >ADD TALONARIOS REGISTRATION FUNCTION </li>
 </ul>
-</p>
 
-<table border>
+
+<table border="dotted">
 <tr>
 <td>
 Here's a hint for the month and date arrangements: <br/><br/>
