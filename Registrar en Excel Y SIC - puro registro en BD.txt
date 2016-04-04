@@ -1,4 +1,4 @@
-###### This file must be completely ported into the Excel and SIC systems. Everything here has been registered using the database.
+﻿###### This file must be completely ported into the Excel and SIC systems. Everything here has been registered using the database.
 ###### There may be some redundancy because several payments were already registered in the old system, but not the new one.
 ######################
 ###################### BEGIN LOG BLOCK ################
@@ -123,7 +123,7 @@ RODRÍGUEZ ARIAS	ANDRÉS FELIPE	8	Abr
 
 
 
-
+(most of everything registered on 2016-04-04)
 
 
 
@@ -168,3 +168,7 @@ NICOLE ANDREA	FAJARDO VESGA		5	583	1083	1772			1805742.00
 
 DAYAN HERBET	MORA DIAZ		11	832	1332	1772			1691992.00
 
+
+
+(Check Rincon Rojas Miguel Angel from 7a to resolve the account payment with what's registered
+Excel has a different name.....)
