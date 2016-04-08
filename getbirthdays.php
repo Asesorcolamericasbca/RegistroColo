@@ -2,6 +2,28 @@
 
 include('vars.php');
 
+echo 'Against which date do you want to evaluate? <br><br>';
+
+?>
+
+<form action="getbirthdays.php" method="post">
+	day <input type="text" name="day" value="5" autofocus> <br>
+	month <input type="text" name="month" value="2" min="0" max="12"> <br>
+	year<input type="number" name="year" value="2016"> <br>
+	<br>
+	<input type="submit">
+	</form>
+	
+<?php 
+
+if(!$_POST){}
+else
+{
+	
+	$day = $_POST['day'];
+	$month = $_POST['month'];
+	$year = $_POST['year'];
+
 $counter = 1;
 $variable = array();
 $boundvars = array();
@@ -18,8 +40,9 @@ $sql = '
 			(
 				SELECT ( 
 						CASE 
-							WHEN MONTH(DATE(stu.dob)) > 2 && DAY(DATE(stu.dob)) > 1 THEN 2016 - YEAR(stu.dob) - 1 
-							ELSE (SELECT 2016 - YEAR(stu.dob)) 
+							WHEN MONTH(DATE(stu.dob)) < :month THEN (SELECT :year - YEAR(stu.dob))
+                    		WHEN MONTH(DATE(stu.dob)) = :month && DAY(DATE(stu.dob)) < :day THEN (SELECT (:year -1) - YEAR(stu.dob))
+							ELSE (SELECT (:year - 1) - YEAR(stu.dob))
 						END 
 						) 
 			) AS years_old 
@@ -65,9 +88,9 @@ foreach($exec as $row)
 echo '<table>
 		<tr>
 		<td>Grade</td>
-		<td>Total</td>
-		<td>Age</td>
 		<td>Gender</td>
+		<td>Age</td>
+		<td>Total</td>
 		</tr>';
 
 while($counter < 12) {
@@ -82,6 +105,9 @@ while($counter < 12) {
 		$exec=$dbh->prepare($sql);
 		$exec->bindParam(':grade', $variable[$counter], PDO::PARAM_INT);
 		$exec->bindParam(':gender', $gender, PDO::PARAM_INT);
+		$exec->bindParam(':month', $month, PDO::PARAM_INT);
+		$exec->bindParam(':day', $day, PDO::PARAM_INT);
+		$exec->bindParam(':year', $year, PDO::PARAM_INT);
 		$exec->execute();
 		
 		//$val = $exec->fetchColumn();
@@ -91,9 +117,9 @@ while($counter < 12) {
 		
 			echo '<tr>
 					<td style=font-weight:bold>'.$counter.'</td>';
-			echo	'<td>'.$row["Total"].'</td>';
+			echo	'<td>'.$row["gender"].'</td>';
 			echo	'<td>'.$row["years_old"].'</td>
-					<td>'.$row["gender"].'</td>
+					<td>'.$row["Total"].'</td>
 				</tr>';
 				
 		}
@@ -109,6 +135,7 @@ while($counter < 12) {
 		
 	
 	$counter += 1;
+	echo '<tr><td colspan="4">----------------------------------</td></tr>';
 }
 
 echo '</table>';
@@ -129,8 +156,12 @@ while ($counter < 23){
 }
 /**/
 
+}
+
 $exec = null;
 
 $dbh = null;
+
+
 
 ?>

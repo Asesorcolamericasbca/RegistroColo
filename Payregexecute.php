@@ -12,6 +12,7 @@ if(!$_POST){
 } else {
 	
 	$amount = $_POST['amount']*$_POST['months'];
+	$_POST['amount'] = $amount;
 	
 	$counter=0;
 	$date=$_POST['date'];

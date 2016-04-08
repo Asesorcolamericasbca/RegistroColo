@@ -152,7 +152,8 @@ if($_POST){
 		$joinstatotra.
 		$joinenrtosta.
 		$joinstutoenr."
-		WHERE tra.aid = :aid";
+		WHERE tra.aid = :aid
+		ORDER BY paydate ASC";
 	
 	$exec=$dbh->prepare($sql);
 	$exec->bindParam(':aid', $aid, PDO::PARAM_INT);
@@ -228,6 +229,72 @@ if($_POST){
 	
 	echo '<h3>Register Payment</h3>';
 
+	
+	
+	$counter = 0;
+	$stotal = 1;
+	
+	$gettransactiontotal = 'SELECT balance AS total FROM staccount as sta WHERE aid = :aid';
+	$exec=$dbh->prepare($gettransactiontotal);
+	$exec->bindParam(':aid', $aid, PDO::PARAM_INT);
+	$exec->execute();
+	
+	$currenttotal = $exec->fetchColumn();
+	
+	
+	while ($stotal < $currenttotal) {
+		if ($currenttotal == 0)
+		{
+			$total = 0;
+			break;
+		}
+		$stotal = $amount*$counter;
+		$counter += 1;
+	}
+	
+	$counter -= 1;
+	
+	
+	// payments made => current month due
+	$monthspaid = array(
+		0 => 11,
+		1 => 10,
+		2 => 9,
+		3 => 8,
+		4 => 7,
+		5 => 6,
+		6 => 5,
+		7 => 4,
+		8 => 3,
+		9 => 2,
+		10 => 0,
+		
+);
+	//echo $counter;
+	
+	$shorten = $monthspaid[$counter];
+	
+	$dateObj=DateTime::createFromFormat('!m', $shorten);
+	$mydate=$dateObj->format('M');
+	
+	if($shorten >= date('n'))
+		$style='style="color:Blue;"';
+	else
+		$style='style="color:Red;"';
+	
+	if($shorten < date('n'))
+		$msg2 = ' They are behind on their balance.';
+	
+	if($shorten == 0)
+		$msg = '<strong '.$style.'>unpaid</strong>.';
+	else if(isset($msg2))
+		$msg = 'paid up to <strong '."$style".'>'.$mydate.'</strong>. '.$msg2;
+	else 
+		$msg = 'paid up to <strong '."$style".'>'.$mydate.'</strong>.';
+	
+	
+		echo 'Account is currently '.$msg.'<br>';
+	
 	
 
 	echo '<form id="form" action="Payregexecute.php" method="post">

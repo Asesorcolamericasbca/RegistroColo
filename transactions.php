@@ -20,6 +20,11 @@ $exec = null;
 
 echo 'Balance: '.$balance.'<br><br>';
 
+
+
+
+
+
 $sql="  SELECT sta.aid,stu.lname,stu.name,enr.grade,sta.num_talonario,tra.amount,tra.paydate,tra.regdate
 		FROM ".$tra.
 		$joinstatotra.
