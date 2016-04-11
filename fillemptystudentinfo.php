@@ -16,39 +16,62 @@ grade<input type="number" name="grade" min="0" max="12"> <br>
 if(!$_POST){}
 else{
 	// this sql is broken
-	$sql = 'SELECT stu.id,name,lname,rate.grade,dob,exp_ciudad,stu.rh,stu.eps
-		FROM student as stu
-		JOIN enrollment enr ON enr.id = stu.id
-		JOIN rate ON grade_id = enr.grade
-		JOIN eps ON eps_code = stu.eps
-		JOIN ciudades ON cod_ciu = stu.exp_ciudad
-		JOIN rh ON rh_code = stu.rh
-		WHERE dob = 0 AND enr.status = 1 AND YEAR(enr.enr_date) = 2016 AND rate.grade = 3
-		ORDER BY stu.id ASC
-		'
+	
+	$cityautosuggestsql = 'SELECT cod_ciu,ciudad,departamento,pais.pais 
+		FROM ciudades as ciu
+		JOIN pais ON cod_pais = ciu.pais';
+	
+	$cityautosuggestprep = $dbh->prepare($cityautosuggestsql);
+	$cityautosuggestprep->execute();
 	
 	
+	$rhautosuggestsql = 'SELECT rh_code,rh
+		FROM rh
+			';
+	
+	$rhautosuggestprep = $dbh->prepare($rhautosuggestsql);
+	$rhautosuggestprep->execute();
 	
 	
+	$rhautosuggestsql = 'SELECT rh_code,rh
+		FROM rh
+			';
+	
+	$rhautosuggestprep = $dbh->prepare($rhautosuggestsql);
+	$rhautosuggestprep->execute();
 	
 	
+	$epsautosuggestsql = 'SELECT eps_code,eps 
+			FROM eps
+				';
+	
+	$epsautosuggestprep = $dbh->prepare($epsautosuggestsql);
+	$epsautosuggestprep->execute();
 	
 	
+	$grade = $_POST['grade'];
+	
+	$grtest = ' AND rate.grade = :grade ';
+	
+	$sql = 'SELECT stu.id,name,lname,dob,exp_ciudad,rh,eps,rate.grade 
+		FROM student as stu 
+		JOIN enrollment enr ON enr.id = stu.id 
+		JOIN rate ON rate.grade_id = enr.grade 
+		WHERE dob = "0000-00-00" '.$grtest.'
+			OR eps is null '.$grtest.'
+			OR eps = 0 '.$grtest.'
+			OR rh is null '.$grtest.'
+			OR rh = 0 '.$grtest.'
+		';
+		
+	$sqlprep = $dbh->prepare($sql);
+	$sqlprep->bindParam(':grade', $grade, PDO::PARAM_INT);
+	$sqlprep->execute();
 	
 	
+	$counter=0;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	echo $counter;
 	
 	
 	echo '<table>';
@@ -65,56 +88,75 @@ else{
 			<td> eps </td>
 			</tr>';
 	
-	//echo '<form action="PayregPrep.php?date='.$_POST['paydate'].'" method="post">'; //Demo version
-	
-	echo '<form id="form" action="ReviewPayments.php" method="post">';
-	
-	$counter=0;
-	
-	echo $counter;
-	
-	foreach($exec as $row)
-	{
+	echo '<form id="form" action="fillemptystudentinfoexecute.php" method="post">';
 	
 	
-	
-		echo '<tr>
-				<td> <input id="next" type="radio" name="state'.$counter.'">
+	foreach($sqlprep as $row)
+		{
+			
+		
+			echo '<tr>
+				<td> <input id="next" type="checkbox" name="state'.$counter.'">
 						</td>
-				<td>'.$row["aid"].'<input type="hidden" name="aid'.$counter.'" value="'.$row["aid"].'">
+				<td>'.$row["id"].'<input type="hidden" name="id'.$counter.'" value="'.$row["id"].'">
 						</td>
-				<td>'.$row["lname"].'<input type="hidden" name="paydate'.$counter.'" value="'.$_POST['paydate'].'">
+				<td>'.$row["lname"].'
 						</td>
-				<td>'.$row["name"].'<input type="hidden" name="eid'.$counter.'" value="'.$row["eid"].'">
+				<td>'.$row["name"].'
 						</td>
 				<td>'.$row["grade"].'
 						</td>
-				<td>'.$row["eid"].'
+				<td>'.'<input type="date" name="dob'.$counter.'" value="'.$row["dob"].'">
 						</td>
-				<td>'.$row["num_talonario"].'
+				<td>'.'<input type="text" name="exp_ciudad'.$counter.'" value="'.$row["exp_ciudad"].'" list="ciudades">
+						<datalist id="ciudades">';
+						
+						foreach($cityautosuggestprep as $crow){
+							echo '<option value="'.$crow["ciudad"].'" label="'.$crow["departamento"].', '.$crow["pais"].'"/>';
+						}
+						echo '
+						</datalist>
+						</td>
+				<td>'.'<input type="text" name="rh'.$counter.'" value="'.$row["rh"].'" list="sangre">
+						<datalist id="sangre">';
+						
+						foreach($rhautosuggestprep as $rrow){
+							echo '<option value="'.$rrow["rh"].'" />';
+						}
+						echo '
+						</datalist>
+						</td>
+				<td>'.'<input type="text" name="eps'.$counter.'" value="'.$row["eps"].'" list="salud">
+						<datalist id="salud">';
+						
+						foreach($epsautosuggestprep as $erps){
+							echo '<option value="'.$erps["eps"].'"  />';
+						}
+						echo '
+						</datalist>
+								
 						</td>
 			</tr>';
-		$counter+=1;
-	
-	}
-	
-	
-	echo '</table>';
-	
-	echo $counter;
-	
-	if($counter > 0 ) {
-	
-		echo ' <br> <input type="submit">
+			$counter+=1;
+		
+		}
+		
+		echo '<input type="hidden" name="finalcounter" value="'.$counter.'">';
+		
+		
+		echo '</table>';
+		
+		
+		echo $counter;
+		
+		if($counter > 0 ) {
+		
+			echo ' <br> <input type="submit">
 			</form>';
+		}
 	
 	
-	
-	} else {
-		echo 'that talonario doesn\'t seem registered yet, would you like to
-				<a id="next" href="talcheck.php">fix that</a> now?';
 	}
-}
 
 
 ?>
