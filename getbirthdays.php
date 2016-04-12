@@ -49,7 +49,7 @@ $sql = '
 		FROM Student AS stu 
 		JOIN `enrollment` AS enr ON enr.id = stu.id 
 		JOIN Gender ON gen_code = stu.gender 
-		WHERE enr.grade = :grade AND YEAR(enr.enr_date) = 2016 AND stu.gender = :gender 
+		WHERE enr.grade = :grade AND YEAR(enr.enr_date) = 2016 AND stu.gender = :gender AND enr.status = 1
 		GROUP BY years_old
 		';
 /**/
@@ -99,7 +99,8 @@ while($counter < 12) {
 	$variable[$counter] = ($counter);
 /*	echo '<br>variable[$counter]: '.$variable[$counter];
 	echo '<br>';
-/**/	
+/**/
+	$fulltotal = 0;
 	while ($gender < 3){
 	
 		$exec=$dbh->prepare($sql);
@@ -112,6 +113,8 @@ while($counter < 12) {
 		
 		//$val = $exec->fetchColumn();
 		
+		$total = 0;
+		
 		foreach($exec as $row)
 		{
 		
@@ -121,15 +124,18 @@ while($counter < 12) {
 			echo	'<td>'.$row["years_old"].'</td>
 					<td>'.$row["Total"].'</td>
 				</tr>';
-				
+			
+			$total = $total +  $row["Total"];
 		}
-		
-		
+		$fulltotal = $fulltotal + $total;
+		echo '<tr><td>Total: </td><td>'.$total.'</td><td></td><td></td></tr>';
 		//$obtainedvals = array_push($obtainedvals, $val);
 //		echo 'gender = '.$gender.'<br>';
 		$gender += 1;
 	
 	}
+	
+	echo '<tr><td>Full Total: </td><td>'.$fulltotal.'</td><td></td><td></td></tr>';
 	
 	$gender = 1;
 		
