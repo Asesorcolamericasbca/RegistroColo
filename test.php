@@ -136,13 +136,18 @@ $quicky->pcolumns('id', 'name', 'lname');
 
 ##########################
 
+$vars = array(':yeara' => 2006,
+		':lname' => '%meneses%');
 
-
-
-/*
-$turd = new sql($dbh, $sqr);
+$sqn = "SELECT * FROM $stu WHERE year(dob) = :yeara AND lname like :lname";
+$turd = new sql($dbh, $sqn);
 $turd->bindval_exec($vars);
-*/
+
+$quicky = new table($sqrl);
+$quicky->pcolumns('id', 'name', 'lname');
+
+/**/
+
 
 /*
 $keys = ['id', 'name', 'lname'];
