@@ -2,4 +2,61 @@ jose david garcia of 5
 "nueva eps -> Seguro Social"
 
 
+jose daniel cadena garcia of 9
+"nueva eps -> Seguro Social"
+
+
 need to change eps relation because it appears that each student may have more than one
+
+
+don't know what 'sinapsis' is in terms of eps or sisben
+
+
+
+
+Add matricula expenses to balance as the components that make up the total to pay, and 
+categorize the components so that the money that doesn't go to the school's account
+isn't added to it in the system, but that it does make up part of the balance.
+
+Also set it so that the corresponding one-time expenses are not charged twice to parents
+that have matriculated 2+ of their children here.
+
+Add in a deletion system that will remove an account in a specified number of days
+unless the conditions are fulfilled by that time.
+
+
+
+
+Missing 4 escalafones on the teachers
+	1 male at 14 // Edgar - who left
+	1 male at 7 // Boris - who left
+	1 female at 7 // Olga?? (resolved as yes, because of pedagogy cert in resume)
+	
+	
+	
+need to register general services personnel (victor, sol, gloria, etc...)
+
+~help~ the admin people numbers don't match, missing 1 female in directive group 
+(according to excel, because the paper documents say adminsec is supporting role)
+
+add subjects taught by teachers and the weekly hours spent on each subject in each grade for each teacher
+
+~help~ add the 'anos-de-formacion' for each teacher
+
+INQUIETUD:Do we include my mom as the legal rep in the school stats, or not?  
+(resolved mom as not include because not listed in Lili's note as people on school payroll)
+
+Check contracts for contract types on non-teacher staff
+
+
+Register 'primaria' subjects (the ones that compose the category) on carga adademico table:
+
+Primaria = everything except (Art[1hr], Informatica[2hrs], Ingles[2hrs]) = 20 hours for primaria,
+which lines up with paper data
+
+
+Call Lili for help?
+
+
+
+Stuck on Alba B. (msaccess id 30)

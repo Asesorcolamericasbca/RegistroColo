@@ -1,0 +1,22 @@
+Naming conventions:
+
+No plural names, ever.
+
+Tables must be named by the entity it represents, or its function.
+If the table represents something descriptive, such as 'previous year status representation', it must be reworked.
+
+If multiple words are needed for a table name, the format will look thus: ''
+
+neither underscore nor dash may be used in primary keys
+within column names, 
+
+no names anywhere may permit spaces, or reserved words.
+no capitalization is permitted in any names.
+no punctuation is permitted in any names.
+
+no special characters are permitted in any names, except for the underscore (_) and dash (-), 
+each according to their specification within this ruleset.
+
+dashes in table names mean that the table is in testing phase
+
+The entire database must adhere to a single language, and no slang

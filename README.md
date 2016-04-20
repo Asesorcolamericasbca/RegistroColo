@@ -5,7 +5,7 @@ TODO
 
 <ul>
 <li>Add talonario Dupe check reporter</li>
-<li>Fix talonario collision bug and make it throw an exception if there's a repeat<br/>
+<li><strethrough>Fix talonario collision bug and make it throw an exception if there's a repeat<br/>
 if the school's admin is so bad that there are real life dupes, then make <br/>
 a work around to keep identities unique so payments can be put through quick and easy</li>
 <li>Add a multiplier box to select how many months are being paid for with default value = 1</li>

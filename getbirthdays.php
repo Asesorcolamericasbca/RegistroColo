@@ -8,7 +8,7 @@ echo 'Against which date do you want to evaluate? <br><br>';
 
 <form action="getbirthdays.php" method="post">
 	day <input type="text" name="day" value="5" autofocus> <br>
-	month <input type="text" name="month" value="2" min="0" max="12"> <br>
+	month <input type="text" name="month" value="3" min="0" max="12"> <br>
 	year<input type="number" name="year" value="2016"> <br>
 	<br>
 	<input type="submit">
