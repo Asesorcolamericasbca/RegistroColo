@@ -2,13 +2,92 @@
 
 include('dbcreds.php');
 
+
+
+class sql{
+	
+	private $sqr, $obj, $bindings;
+	
+	function __construct($obj, $sql){
+		$this->obj = $obj;
+		$this->sql = $sql;
+		$this->prep = $obj->prepare($sql);
+	}
+	
+	function bindval_exec($x){
+		foreach($x as $key => $value){
+			echo "binding $value to $key ";
+			if(is_int($value)){
+				echo 'as int<br>';
+				$this->prep->bindParam("$key", $value, PDO::PARAM_INT); //missing original table object
+			}
+			else{
+				echo 'as str<br>';
+				$this->prep->bindParam("$key", $value, PDO::PARAM_STR);
+			}
+		}
+	}	
+	/*
+	function bindval_as_array(){
+		if(is_array())
+	}*/
+}
+
+
+
+class table{
+	
+	private $result;
+	function __construct($x){
+		$this->result = $x; 
+	}
+	
+	function new_result($x){
+		$this->result = $x;
+	}
+	
+	function get_table(){
+		return $this->result;
+	}
+	
+	function pcolumns(){
+		
+		echo '<table> <tr style="font-weight:bold">';
+		foreach(func_get_args() as $col){
+			echo '<td>'.$col.'</td>';
+			}
+			echo '</tr>';
+		
+		foreach($this->result as $val){
+			echo '<tr>';
+			foreach(func_get_args() as $col){
+				echo '<td>'.$val[$col].'</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</tr> </table>';
+	}
+	
+}
+
+
 $sta=" staccount AS sta ";
-
 $stu=" student AS stu ";
-
 $enr=" enrollment AS enr ";
-
 $tra=" `transaction` AS tra ";
+
+function tjoin($table1, $table2, $key){
+	return ' JOIN '.$table1.' ON '.$table1.'.'.$key.' = '.$table2.'.'.$key.' ';
+}
+
+
+
+
+
+/*
+
+
+
 
 $joinenrtosta=" JOIN ".$enr." ON enr.eid = sta.eid ";
 
@@ -143,7 +222,7 @@ talonariofromaid
 
 
 //$sqltest="SELECT * FROM ".$stu;
-
+/*
 $sqltest1="SELECT * ".
 	"FROM ".$sta.
 	$joinenrtosta.

@@ -3,7 +3,7 @@
 include('vars.php');
 
 
-echo date('Y');
+// echo date('Y');
 
 /*
 $tester = array(
@@ -67,6 +67,97 @@ foreach($stmt as $row => $value)
 	echo $row.": ".$value;
 }
 */
+
+/*
+function test () {
+	echo func_num_args()."<br>";
+	foreach (func_get_args() as $arg){
+		echo ''.$arg.' ';
+		
+	}
+}
+
+test(3, 5, 'chicky');
+*/
+
+############### working
+
+/*
+
+$good = "SELECT * FROM $stu";
+$sql = $dbh->prepare($good);
+$sql->execute();
+
+$quick = new table($sql);
+$quick->pcolumns('id', 'name', 'lname');
+
+/**/
+####################### 
+
+############# also working
+
+/*
+
+$yeara = 2006;
+$juan = "%meneses%";
+$stud = ' student ';
+
+$sqg = "SELECT * FROM $stu WHERE year(dob) = :yeara AND lname like :lname";
+$sqr = $dbh->prepare($sqg);
+$sqr->bindParam(":yeara", $yeara, PDO::PARAM_INT);
+$sqr->bindParam(":lname", $juan, PDO::PARAM_STR);
+$sqr->execute();
+
+$quick = new table($sqr);
+$quick->pcolumns('id', 'name', 'lname');
+
+/**/
+
+##########################
+
+
+################## also working
+
+/*
+
+$varsy = array(':yeara' => 2006,
+		      ':lname' => '%meneses%');
+
+$sqpg = "SELECT * FROM $stu WHERE year(dob) = :yeara AND lname like :lname";
+$sqrl = $dbh->prepare($sqpg);
+$sqrl->bindParam(":yeara", $varsy[':yeara'], PDO::PARAM_INT);
+$sqrl->bindParam(":lname", $varsy[':lname'], PDO::PARAM_STR);
+$sqrl->execute();
+
+$quicky = new table($sqrl);
+$quicky->pcolumns('id', 'name', 'lname');
+
+/**/
+
+##########################
+
+
+
+
+/*
+$turd = new sql($dbh, $sqr);
+$turd->bindval_exec($vars);
+*/
+
+/*
+$keys = ['id', 'name', 'lname'];
+foreach($sql as $hi){
+	foreach($keys as $l){
+		echo "$hi[$l] ";
+	}
+	echo "<br>";
+}*/
+
+
+
+
+
+
 
 $stmt = null;
 
