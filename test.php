@@ -146,7 +146,7 @@ $quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 // IT WORKS!!! This is also the block that is currently being used
 
-/*
+
 $vars = array(
 ':year' => 2005,
 ':month' => 7,
@@ -253,8 +253,7 @@ $result->pscolumns($pcols);
 ##############
 
 /* current attempt at making it all happen in one object (doesn't work)
- * 
- * */
+
 $cols = columnlist("$stu.id","name","lname","dob","eid","eps");
 $pcols = array ("id","name","lname","eid");
 $sql = "SELECT $cols FROM $stu ".tjoin($enr,$stu,'id');

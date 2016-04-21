@@ -15,10 +15,7 @@ class sql{
 		$this->exed = null;
 		$this->result = null;
 	}
-	
-	function new_table($x){}
 		
-	
 	
 	function ex($x = null){
 		if($x != null){
@@ -105,11 +102,11 @@ class sql{
 class table{
 	
 	private $result;
-	function __construct($x){
+	function __construct($x = null){
 		$this->result = $x; 
 	}
 	
-	function new_result($x){
+	function new_table($x){
 		$this->result = $x;
 	}
 	
