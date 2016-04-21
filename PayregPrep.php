@@ -11,10 +11,13 @@ if(!$_POST){
 } else {
 	
 	// student name, grade, aid, eid
-	$sql="SELECT stu.name,stu.lname,enr.grade,sta.aid,sta.eid,sta.num_talonario ".
+	
+	$cols = columnlist("$stu.name","$stu.lname","$enr.grade","$sta.aid","$sta.eid","$sta.num_talonario");
+	$pcols = array ("aid","lname","name","grade","eid","num_talonario");
+	$sql="SELECT $cols ".
 	" FROM ".$sta.
-	$joinenrtosta.
-	$joinstutoenr.
+	tjoin($enr, $sta, "eid").
+	tjoin($stu, $enr, "id").
 	"WHERE num_talonario = :talonario";
 	$exec=$dbh->prepare($sql);
 	$exec->bindParam(":talonario", $_POST['talonario'], PDO::PARAM_INT);

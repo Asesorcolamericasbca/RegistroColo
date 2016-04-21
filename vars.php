@@ -6,14 +6,18 @@ include('dbcreds.php');
 
 class sql{
 	
-	private $sqr, $obj;
+	private $sqr, $obj, $result;
 	
 	function __construct($obj, $sql){
 		$this->obj = $obj;
 		$this->sql = $sql;
 		$this->prep = $obj->prepare($sql);
 		$this->exed = null;
+		$this->result = null;
 	}
+	
+	function new_table($x){}
+		
 	
 	
 	function ex($x = null){
@@ -53,6 +57,43 @@ class sql{
 		}
 		$this->exed = $this->prep;
 		$this->exed->execute();
+	}
+	
+	
+	function pcolumns(){
+	
+		echo '<table> <tr style="font-weight:bold">';
+		foreach(func_get_args() as $col){
+			echo '<td>'.$col.'</td>';
+		}
+		echo '</tr>';
+	
+		foreach($this->result as $val){
+			echo '<tr>';
+			foreach(func_get_args() as $col){
+				echo '<td>'.$val[$col].'</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</tr> </table>';
+	}
+	
+	
+	function pscolumns($list){
+		echo '<table> <tr style="font-weight:bold">';
+		foreach($list as $col){
+			echo '<td>'.$col.'</td>';
+		}
+		echo '</tr>';
+	
+		foreach($this->result as $val){
+			echo '<tr>';
+			foreach($list as $col){
+				echo '<td>'.$val[$col].'</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</tr> </table>';
 	}
 	
 	
@@ -147,7 +188,7 @@ function columnlist(){
 
 
 
-/*
+
 
 
 
