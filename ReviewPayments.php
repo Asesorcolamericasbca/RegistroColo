@@ -135,7 +135,7 @@ if($_POST){
 	/* */	
 	
 	
-	$sqlbalance=" SELECT balance FROM ".$sta."WHERE aid = :aid";
+	$sqlbalance=" SELECT balance FROM ".$sta." WHERE aid = :aid";
 	
 	$exec=$dbh->prepare($sqlbalance);
 	$exec->bindParam(':aid', $aid, PDO::PARAM_INT);
@@ -146,14 +146,30 @@ if($_POST){
 	echo "Current balance: ".$balance.'<br><br><br>';
 	
 	
-	$sql="
+	$cols=columnlist("$stu.name",
+			"$stu.lname",
+			"$enr.grade",
+			"$sta.aid",
+			"$sta.num_talonario",
+			"$tra.amount",
+			"$tra.paydate",
+			"$tra.regdate");
+	$sql=" SELECT $cols
+		FROM ".$tra.
+		tjoin($sta, $tra, "aid").
+		tjoin($enr, $sta, "eid").
+		tjoin($stu, $enr, "id").
+		" WHERE $tra.aid = :aid
+		ORDER BY paydate ASC";
+	echo $sql;
+	/*$sql="
 		SELECT sta.aid,stu.lname,stu.name,enr.grade,sta.num_talonario,tra.amount,tra.paydate,tra.regdate
 		FROM ".$tra.
 		$joinstatotra.
 		$joinenrtosta.
 		$joinstutoenr."
 		WHERE tra.aid = :aid
-		ORDER BY paydate ASC";
+		ORDER BY paydate ASC";*/
 	
 	$exec=$dbh->prepare($sql);
 	$exec->bindParam(':aid', $aid, PDO::PARAM_INT);
@@ -161,7 +177,7 @@ if($_POST){
 	
 	
 	$counter = 1;
-	
+
 	echo '<table>';
 		
 		echo '<tr style=font-weight:bold>
@@ -171,33 +187,33 @@ if($_POST){
 			<td> name </td>
 			<td> grade </td>
 			<td> num_talonario </td>
-				<td> amount </td>
-				<td> paydate </td>
-				<td> regdate </td>
+			<td> amount </td>
+			<td> paydate </td>
+			<td> regdate </td>
 			</tr>';
 		
 		foreach($exec as $row)
 		{
 			
 			echo '<tr>
-					<td style=font-weight:bold>'.$counter.'</td>';
-			echo	'<td>'.$row["aid"].'</td>';
-			echo	'<td>'.$row["lname"].'</td>
+				<td style=font-weight:bold>'.$counter.'</td>
+				<td>'.$row["aid"].'</td>
+				<td>'.$row["lname"].'</td>
 				<td>'.$row["name"].'</td>
 				<td>'.$row["grade"].'</td>
 				<td>'.$row["num_talonario"].'</td>
-						<td>'.$row["amount"].'</td>
-								<td>'.$row["paydate"].'</td>
-										<td>'.$row["regdate"].'</td>
+				<td>'.$row["amount"].'</td>
+				<td>'.$row["paydate"].'</td>
+				<td>'.$row["regdate"].'</td>
 			</tr>';
 			$counter+=1;
 		}
 	
 	echo '</table>';
-
+/**/
 
 	$sqlgrade="SELECT grade FROM ".$enr.
-	"WHERE eid = :eid";
+	" WHERE eid = :eid";
 	
 	$exec=$dbh->prepare($sqlgrade);
 	$exec->bindParam(':eid', $eid, PDO::PARAM_INT);

@@ -59,7 +59,8 @@ class sql{
 		$this->exed->execute();
 	}
 	
-	
+	#### Trying to make it print the tables from within a single object
+	/*
 	function pcolumns(){
 	
 		echo '<table> <tr style="font-weight:bold">';
@@ -95,7 +96,7 @@ class sql{
 		}
 		echo '</tr> </table>';
 	}
-	
+	/**/
 	
 }
 

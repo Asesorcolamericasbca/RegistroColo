@@ -248,20 +248,22 @@ $obj = $qui->exed;
 
 $result = new table($obj);
 $result->pscolumns($pcols);
-*/
+/**/
 
 ##############
 
-/* current attempt at making it all happen in one object
+/* current attempt at making it all happen in one object (doesn't work)
  * 
- * 
+ * */
 $cols = columnlist("$stu.id","name","lname","dob","eid","eps");
 $pcols = array ("id","name","lname","eid");
 $sql = "SELECT $cols FROM $stu ".tjoin($enr,$stu,'id');
 $qui = new sql($dbh, $sql);
 $qui->ex();
-$qui->pcolumns($qui->exed);
-*/
+$obj = $qui->exed;
+
+$qui->pcolumns($obj);
+/**/
 
 
 

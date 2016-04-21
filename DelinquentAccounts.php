@@ -63,10 +63,10 @@ foreach ($exec as $row) {
 	echo '<tr><td>'.$row['aid'];
 	echo '</td><td>'.$row['name'].
 	'</td><td>'.$row['lname'].
-	'</td><td>'.$row['grade'].
+	'</td><td style="text-align:center;">'.$row['grade'].
 	'</td><td>'.$row['enrollment_year'].
 	'</td><td>'.$row['balance'].
-	'</td><td>';
+	'</td><td style="text-align:center;">';
 	$currenttotal = $row['balance'];
 	$counter = 0;
 	$stotal = 1;
@@ -115,7 +115,7 @@ foreach ($exec as $row) {
 		$msg = '<strong '."$style".'>'.$mydate.'</strong>';
 			
 	echo $msg.'</td>
-	<td>'.(idate('m')-$shorten).'</td>
+	<td style="text-align:center;">'.(idate('m')-$shorten).'</td>
 	</tr>';
 	
 	
