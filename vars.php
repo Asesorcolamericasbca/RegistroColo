@@ -6,31 +6,56 @@ include('dbcreds.php');
 
 class sql{
 	
-	private $sqr, $obj, $bindings;
+	private $sqr, $obj;
 	
 	function __construct($obj, $sql){
 		$this->obj = $obj;
 		$this->sql = $sql;
 		$this->prep = $obj->prepare($sql);
+		$this->exed = null;
 	}
 	
-	function bindval_exec($x){
-		foreach($x as $key => $value){
-			echo "binding $value to $key ";
-			if(is_int($value)){
-				echo 'as int<br>';
-				$this->prep->bindParam("$key", $value, PDO::PARAM_INT); //missing original table object
+	
+	function ex($x = null){
+		if($x != null){
+			$arraykey = array();
+			$arrayval = array();
+			$counter = 0;
+			
+			foreach($x as $k => $v){
+				array_push($arraykey, $k);
+				array_push($arrayval, $v);
 			}
-			else{
-				echo 'as str<br>';
-				$this->prep->bindParam("$key", $value, PDO::PARAM_STR);
+			
+			###### working function
+			/*
+			while($counter < sizeof($arraykey)){
+				//echo $counter.' '.sizeof($arraykey).' '.$arraykey[$counter].' '.$arrayval[$counter]." <br>";
+				$this->prep->bindParam($arraykey[$counter], $arrayval[$counter], PDO::PARAM_STR);
+				$counter += 1;
 			}
+			/**/
+			########
+			
+			while($counter < sizeof($arraykey)){
+				//echo $counter.' '.sizeof($arraykey).' '.$arraykey[$counter].' '.$arrayval[$counter]." <br>";
+				if(is_int($arrayval[$counter])){
+					//echo 'as int<br>';
+					$this->prep->bindParam($arraykey[$counter], $arrayval[$counter], PDO::PARAM_INT);
+				}
+				else{
+					//echo 'as str<br>';
+					$this->prep->bindParam($arraykey[$counter], $arrayval[$counter], PDO::PARAM_STR);
+				}
+				$counter += 1;
+			}
+
 		}
-	}	
-	/*
-	function bindval_as_array(){
-		if(is_array())
-	}*/
+		$this->exed = $this->prep;
+		$this->exed->execute();
+	}
+	
+	
 }
 
 
@@ -68,19 +93,57 @@ class table{
 		echo '</tr> </table>';
 	}
 	
+	
+	function pscolumns($list){
+		echo '<table> <tr style="font-weight:bold">';
+		foreach($list as $col){
+			echo '<td>'.$col.'</td>';
+			}
+			echo '</tr>';
+		
+		foreach($this->result as $val){
+			echo '<tr>';
+			foreach($list as $col){
+				echo '<td>'.$val[$col].'</td>';
+			}
+			echo '</tr>';
+		}
+		echo '</tr> </table>';
+	}
+	
 }
 
 
-$sta=" staccount AS sta ";
-$stu=" student AS stu ";
-$enr=" enrollment AS enr ";
-$tra=" `transaction` AS tra ";
+
+
+$sta="staccount";
+$stu="student";
+$enr="enrollment";
+$tra="`transaction`";
+
 
 function tjoin($table1, $table2, $key){
 	return ' JOIN '.$table1.' ON '.$table1.'.'.$key.' = '.$table2.'.'.$key.' ';
 }
 
 
+function columnlist(){
+	$data = array();
+	foreach(func_get_args() as $val){
+		array_push($data, $val);	
+	}
+	
+	$counter = 0;
+	while($counter < sizeof($data)){
+		if(!isset($var))
+			$var = $data[$counter];
+		else 
+			$var = $var.', '.$data[$counter];
+		$counter+=1;
+	}
+	return $var;
+}
+/**/
 
 
 

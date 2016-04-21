@@ -31,7 +31,7 @@ $mydate=$dateObj->format('F');
 echo $mydate;
 
 /*
-$stmt=$dbh->prepare($sqltest1);
+$stmt=$dbh->exedare($sqltest1);
 $stmt->execute();
 
 echo '<table>';
@@ -85,7 +85,7 @@ test(3, 5, 'chicky');
 /*
 
 $good = "SELECT * FROM $stu";
-$sql = $dbh->prepare($good);
+$sql = $dbh->exedare($good);
 $sql->execute();
 
 $quick = new table($sql);
@@ -103,7 +103,7 @@ $juan = "%meneses%";
 $stud = ' student ';
 
 $sqg = "SELECT * FROM $stu WHERE year(dob) = :yeara AND lname like :lname";
-$sqr = $dbh->prepare($sqg);
+$sqr = $dbh->exedare($sqg);
 $sqr->bindParam(":yeara", $yeara, PDO::PARAM_INT);
 $sqr->bindParam(":lname", $juan, PDO::PARAM_STR);
 $sqr->execute();
@@ -118,49 +118,159 @@ $quick->pcolumns('id', 'name', 'lname');
 
 ################## also working
 
+
 /*
+$varsy = array(':yeara' => 2005,
+':mon' => 7);
+		//':lname' => '%MENESES%');
 
-$varsy = array(':yeara' => 2006,
-		      ':lname' => '%meneses%');
-
-$sqpg = "SELECT * FROM $stu WHERE year(dob) = :yeara AND lname like :lname";
-$sqrl = $dbh->prepare($sqpg);
-$sqrl->bindParam(":yeara", $varsy[':yeara'], PDO::PARAM_INT);
-$sqrl->bindParam(":lname", $varsy[':lname'], PDO::PARAM_STR);
+$sqpg = "SELECT * FROM $stu WHERE year(dob) = :yeara AND MONTH(dob) = :mon";
+$sqrl = $dbh->exedare($sqpg);
+$jick = $sqrl->bindParam(":yeara", $varsy[':yeara'], PDO::PARAM_INT);
+$jock = $sqrl->bindParam(":mon", $varsy[':mon'], PDO::PARAM_STR);
 $sqrl->execute();
 
 $quicky = new table($sqrl);
-$quicky->pcolumns('id', 'name', 'lname');
+$quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 /**/
 
 ##########################
+#######################################
+#######################################
+#######################################
+############# BEGIN GOOD BLOCK ########
+#######################################
+#######################################
+#######################################
 
-$vars = array(':yeara' => 2006,
-		':lname' => '%meneses%');
+// IT WORKS!!! This is also the block that is currently being used
 
-$sqn = "SELECT * FROM $stu WHERE year(dob) = :yeara AND lname like :lname";
+/*
+$vars = array(
+':year' => 2005,
+':month' => 7,
+':lname' => '%MENESES%');
+
+//echo 'this time for sure! <br>'; 
+$sqn = "SELECT * FROM $stu WHERE YEAR(dob) = :year AND MONTH(dob) = :month AND lname LIKE :lname";
 $turd = new sql($dbh, $sqn);
-$turd->bindval_exec($vars);
+$turd->ex($vars);
 
-$quicky = new table($sqrl);
-$quicky->pcolumns('id', 'name', 'lname');
+$quicky = new table($turd->exed);
+$quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 /**/
 
+#######################################
+#######################################
+#######################################
+############# END GOOD BLOCK ########## 
+#######################################
+#######################################
+#######################################
+#######################################
+
+
+// Maybe I'm overcomplicating this (this block is not being used)
+/*
+$var = array(
+':year' => 2005,
+':month' => 7,
+':lname' => '%MENESES%');
+
+$datak = array();
+$datav = array();
+
+foreach($var as $k => $v){
+	array_push($datak, $k);
+	array_push($datav, $v);
+}
+
+
+
+//echo 'this time for sure! <br>'; 
+$sqn = "SELECT * FROM $stu WHERE YEAR(dob) = $datak[0] AND MONTH(dob) = $datak[1] AND lname LIKE $datak[2]";
+$turd = new sql($dbh, $sqn);
+$turd->ex($var);
+
+$quicky = new table($turd->exed);
+$quicky->pcolumns('id', 'name', 'lname', 'dob');
+*/
+
+
+
+
+
+#### sql test (and it works)
 
 /*
-$keys = ['id', 'name', 'lname'];
-foreach($sql as $hi){
-	foreach($keys as $l){
-		echo "$hi[$l] ";
-	}
-	echo "<br>";
-}*/
+$cols = columnlist("$stu.id","name","lname","dob","eid","eps");
+$sql = "SELECT $cols FROM $stu ".tjoin($enr,$stu,'id');
+$qui = new sql($dbh, $sql);
+$qui->ex();
+
+$obj = $qui->exed;
+$arr = array('id','name','lname','dob','eid','eps');
+
+echo '<table> <tr style="font-weight:bold">';
+		foreach($arr as $col){
+			echo '<td>'.$col.'</td>';
+			}
+echo '</tr>';
+		
+		foreach($obj as $val){
+			echo '<tr>';
+			foreach($arr as $col){
+				echo '<td>'.$val[$col].'</td>';
+			}
+			echo '</tr>';
+		}
+echo '</tr> </table>';
+
+/**/
+
+#############
+
+################
+## Another test, but with included objects and functions
+## (This also works)
 
 
 
+$cols = columnlist("$stu.id","name","lname","dob","eid","eps");
+$pcols = array ("id","name","lname","eid");
+$sql = "SELECT $cols FROM $stu ".tjoin($enr,$stu,'id');
+$qui = new sql($dbh, $sql);
+$qui->ex();
 
+$obj = $qui->exed;
+
+$result = new table($obj);
+$result->pscolumns($pcols);
+
+##############
+
+
+#########
+// Better for picking columns in queries
+
+/*
+$data = array('hi', 'hello', 'whatsapp');
+$counter = 0;
+
+while($counter < sizeof($data)){
+	if(!isset($var))
+		$var = $data[$counter];
+	else 
+		$var = $var.', '.$data[$counter];
+	$counter+=1;
+}
+
+echo $var;
+*/
+
+################3
 
 
 
