@@ -15,6 +15,10 @@ class sql{
 		$this->exed = null;
 		$this->result = null;
 	}
+	
+	function new_sql($x){
+		$this->sql = $x;
+	}
 		
 	
 	function ex($x = null){
@@ -155,6 +159,34 @@ class table{
 
 
 
+
+
+/* 
+   To be removed after migrating to using the 
+   class (to be made) version of columnlist
+*/
+
+function columnlist(){
+	$data = array();
+	foreach(func_get_args() as $val){
+		array_push($data, $val);
+	}
+
+	$counter = 0;
+	while($counter < sizeof($data)){
+		if(!isset($var))
+			$var = $data[$counter];
+			else
+				$var = $var.', '.$data[$counter];
+				$counter+=1;
+	}
+	return $var;
+}
+
+
+
+
+
 $sta="staccount";
 $stu="student";
 $enr="enrollment";
@@ -166,22 +198,6 @@ function tjoin($table1, $table2, $key){
 }
 
 
-function columnlist(){
-	$data = array();
-	foreach(func_get_args() as $val){
-		array_push($data, $val);	
-	}
-	
-	$counter = 0;
-	while($counter < sizeof($data)){
-		if(!isset($var))
-			$var = $data[$counter];
-		else 
-			$var = $var.', '.$data[$counter];
-		$counter+=1;
-	}
-	return $var;
-}
 /**/
 
 

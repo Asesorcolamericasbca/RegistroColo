@@ -7,7 +7,7 @@ include ('vars.php');
 $aid=$_GET['aid'];
 
 $sql="SELECT balance FROM ".$sta.
-"WHERE aid = :aid";
+" WHERE aid = :aid";
 
 $exec=$dbh->prepare($sql);
 $exec->bindParam(':aid', $aid, PDO::PARAM_INT);
@@ -25,12 +25,13 @@ echo 'Balance: '.$balance.'<br><br>';
 
 
 
-$sql="  SELECT sta.aid,stu.lname,stu.name,enr.grade,sta.num_talonario,tra.amount,tra.paydate,tra.regdate
+$sql="  SELECT $sta.aid,$stu.lname,$stu.name,$enr.grade,$sta.num_talonario,$tra.amount,$tra.paydate,$tra.regdate
 		FROM ".$tra.
-		$joinstatotra.
-		$joinenrtosta.
-		$joinstutoenr."
-		WHERE tra.aid = :aid";
+		tjoin($sta, $tra, 'aid').
+		tjoin($enr, $sta, 'eid').
+		tjoin($stu, $enr, 'id').		
+		"
+		WHERE $tra.aid = :aid";
 
 		$exec=$dbh->prepare($sql);
 		$exec->bindParam(':aid', $aid, PDO::PARAM_INT);

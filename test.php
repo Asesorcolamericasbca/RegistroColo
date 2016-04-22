@@ -146,7 +146,7 @@ $quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 // IT WORKS!!! This is also the block that is currently being used
 
-
+/*
 $vars = array(
 ':year' => 2005,
 ':month' => 7,
@@ -161,6 +161,8 @@ $quicky = new table($turd->exed);
 $quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 /**/
+
+
 
 #######################################
 #######################################
