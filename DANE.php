@@ -13,7 +13,7 @@ function important_info(){
 
 
 
-
+########
 function school_data($dbh = null){
 	
 	global $divider;
@@ -36,12 +36,14 @@ echo $divider;
 
 
 
-$msg = "Required: <br>use plataformaintegra to get stats on last year's failures<br>categories and jobs of workers (missing cafeteria lady,
-		watchman, and accountant)yearly tuition payrates<br>table that shows which grades and
-		subjects teachers spend most of their time with (caracter academico)<br>separate table
+$msg = "Required: <br>use plataformaintegra to get stats on last year's failures<br>
+		yearly tuition payrates<br>
+		table that shows which grades and
+		subjects teachers spend most of their time with (caracter academico)<br>
+		separate table
 		to do the same thing, only for comercio (caracter tecnico)<br><br>";
 
-
+#######
 function print_ages($dbh = null) {
 	
 	echo "<h1>Ages</h1>";
@@ -49,8 +51,8 @@ function print_ages($dbh = null) {
 	global $divider;
 	
 	$day = idate('d');
-	$month = 4;
-	$year = 2016;
+	$month = idate('m');
+	$year = idate('Y');
 	
 	$counter = 1;
 	$variable = array();
@@ -178,7 +180,7 @@ function print_ages($dbh = null) {
 }
 
 
-
+####
 function grade_hours($dbh = null){
 
 	global $divider;
@@ -223,7 +225,7 @@ function grade_hours($dbh = null){
 
 	echo $divider;
 
-	$gradehourstotalsql = "SELECT *,(SUM(`weekly-hours`)) as hours FROM `intensidad-horaria` GROUP BY `grade`";
+	//$gradehourstotalsql = "SELECT *,(SUM(`weekly-hours`)) as hours FROM `intensidad-horaria` GROUP BY `grade`";
 
 	$vars = array(
 			':grade' => 1
@@ -233,6 +235,7 @@ function grade_hours($dbh = null){
 	$pcols = array("subject", "area", "category","hours","grade");
 
 	$tehquer = "SELECT $cols FROM `intensidad-horaria` WHERE grade = :grade";
+	
 	$getgrade = new sql($dbh, $tehquer);
 	$table = new table();
 	while ($vars[':grade'] < 12){
@@ -247,7 +250,7 @@ function grade_hours($dbh = null){
 }
 
 
-
+#####
 function escalafones($dbh = null){
 	
 	echo "<h1>Escalafones</h1>";
@@ -256,75 +259,248 @@ function escalafones($dbh = null){
 
 	echo "<table><tr><td><h3>profesores<br>hombres</h3></td><td>";
 	
-$vars = array(
+	$vars = array(
 		':gender' => 1
-);
-//echo 'this time for sure! <br>';
-$sqn = "SELECT escalafon, COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI' GROUP BY escalafon";
-$turd = new sql($dbh, $sqn);
-$turd->ex($vars);
+	);
+	//echo 'this time for sure! <br>';
+	$sqn = "SELECT escalafon, COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI' GROUP BY escalafon";
+	$turd = new sql($dbh, $sqn);
+	$turd->ex($vars);
 
-$quicky = new table($turd->exed);
-$quicky->pcolumns('escalafon', 'total');
+	$quicky = new table($turd->exed);
+	$quicky->pcolumns('escalafon', 'total');
 
-echo "</tr></td>";
-echo '<tr><td>Hombres total</td><td colspan = "2">';
-$sqn = "SELECT COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI' ";
-$turd = new sql($dbh, $sqn);
-$turd->ex($vars);
+	echo "</tr></td>";
+	echo '<tr><td>Hombres total</td><td colspan = "2">';
+	$sqn = "SELECT COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI' ";
+	$turd = new sql($dbh, $sqn);
+	$turd->ex($vars);
 
-$quicky = new table($turd->exed);
-$quicky->pcolumns('total');
-echo "</td></tr>";		
-echo "</table>";
-
-
-echo "----------";
+	$quicky = new table($turd->exed);
+	$quicky->pcolumns('total');
+	echo "</td></tr>";		
+	echo "</table>";
 
 
-echo "<table><tr><td><h3>profesores<br>mujeres</h3></td><td>";
+	echo "----------";
 
-$vars = array(
+
+	echo "<table><tr><td><h3>profesores<br>mujeres</h3></td><td>";
+
+	$vars = array(
 		':gender' => 2
-);
-//echo 'this time for sure! <br>';
-$sqn = "SELECT escalafon, COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI'  GROUP BY escalafon";
-$turd = new sql($dbh, $sqn);
-$turd->ex($vars);
-
-$quicky = new table($turd->exed);
-$quicky->pcolumns('escalafon', 'total');
-
-
-echo "</tr></td>";
-echo '<tr><td>Mujeres total</td><td colspan = "2">';
-
-$sqn = "SELECT COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI' ";
-$turd = new sql($dbh, $sqn);
-$turd->ex($vars);
-
-$quicky = new table($turd->exed);
-$quicky->pcolumns('total');
-
-echo "</td></tr>";
-echo "</table>";
+	);
+	//echo 'this time for sure! <br>';
+	$sqn = "SELECT escalafon, COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI'  GROUP BY escalafon";
+	$turd = new sql($dbh, $sqn);
+	$turd->ex($vars);
+	
+	$quicky = new table($turd->exed);
+	$quicky->pcolumns('escalafon', 'total');
+	
+	
+	echo "</tr></td>";
+	echo '<tr><td>Mujeres total</td><td colspan = "2">';
+	
+	$sqn = "SELECT COUNT(escalafon) as total FROM `profesores-listado` WHERE gender = :gender AND incluir = 'SI' ";
+	$turd = new sql($dbh, $sqn);
+	$turd->ex($vars);
+	
+	$quicky = new table($turd->exed);
+	$quicky->pcolumns('total');
+	
+	echo "</td></tr>";
+	echo "</table>";
 
 		/**/
-echo $divider;
+	echo $divider;
 
 }
 
 
+#########
+function admins(){
+	global $dbh;
+	$people = array (0,0);
+	$counter = 0;
+	$sql = "SELECT COUNT(*) as total FROM `admon-listado` WHERE include = 'SI'GROUP BY gender ORDER BY gender ASC";
+	$table = new sql($dbh, $sql);
+	$table->ex();
+	foreach($table->exed as $key => $val){
+		echo '<td>'.$val["total"].'</td>';
+		$people[$counter] += $val["total"];
+		$counter += 1;
+	}
+	return $people;
+}
 
+
+#########
+function medics(){
+	global $dbh;
+	$people = 0;
+	$sql="SELECT COUNT(*) as total FROM `apoyo-listado` WHERE cargo = 6 GROUP BY gender ORDER BY gender ASC";
+	$table = new sql($dbh, $sql);
+	$table->ex();
+	foreach($table->exed as $key => $val){
+		echo '<td>'.$val["total"].'</td>';
+		$people = $val["total"];
+	}
+	return $people;
+}
+
+
+######
+function everyone_else(){
+	global $dbh;
+	$people = array (0,0);
+	$counter = 0;	
+	$sql="SELECT COUNT(*) as total FROM `apoyo-listado` WHERE cargo != 6 GROUP BY gender ORDER BY gender ASC";
+	$table = new sql($dbh, $sql);
+	$table->ex();
+	foreach($table->exed as $key => $val){
+		echo '<td>'.$val["total"].'</td>';
+		$people[$counter] += $val["total"];
+		$counter += 1;
+	}
+	return $people;
+}
+
+
+////////////////////////////////
 
 school_data($dbh);
 echo $divider . $divider;
 echo $msg;
 escalafones($dbh);
+
+$total = 0;
+?>
+
+<style>
+
+table, th, td {
+    border: 1px solid black;
+}
+
+</style>
+<table>
+
+<tr><th colspan="4" style="text-align: left">Información del recurso humano en el presente año</th></tr>
+<tr><td></td><td></td><td>Hombres</td><td>Mujeres</td></tr>
+<tr><td rowspan="2" >Docentes</td><td>Directivo Docente</td><td> </td><td> </td></tr>
+								<tr><td>Docentes</td><td> </td><td> </td></tr>
+<tr><td colspan="4"></td></tr>
+<tr><td rowspan="3" >Otros</td><td>Directivos (rectores, directores, coordinadores, supervisores, secretarios)</td>
+<?php $total = admins(); ?>
+</tr>
+								<tr><td>Medicos, odontologos, nutricionistas, terapeutas y enfermeros</td><td> </td>
+<?php $total[1] += medics(); ?></tr>
+								<tr><td>Administrativos (de apoyo y personal de servicios generales)</td>
+<?php $x = everyone_else(); ?></tr>
+<tr><th colspan="2" style="text-align: left">Total de personas</th><td><?php $total[0] += $x[0]; echo $total[0]; ?></td><td><?php $total[1] += $x[1]; echo $total[1];?></td></tr>
+
+</table>
+
+<?php
+
+echo $divider;
+
 print_ages($dbh);
 grade_hours($dbh);
+/**//*
 
+class teacher{
+	function __construct($fname,$lname){
+		$this->fname = $fname;
+		$this->lname = $lname;
+		$this->gender = 0;
+		$this->levelhrs = array (
+			'Primaria' => 0,
+			'Secundaria' => 0,
+			'Media' => 0
+		);
+		$this->subjects = array (
+			'Administracion' => 0,
+			'Algebra' => 0,
+			'Artistica' => 0,
+			'Biologia' => 0,
+			'Calculo' => 0,
+			'Ciencias Economicas y Politicas' => 0,
+			'Ciencias Naturales' => 0,
+			'Ciencias Sociales' => 0,
+			'Contabilidad' => 0,
+			'Educacion Etica y Valores' => 0,
+			'Educacion Fisica' => 0,
+			'Educacion Religiosa' => 0,
+			'Estadistica' => 0,
+			'Filosofia' => 0,
+			'Fisica' => 0,
+			'Geometria' => 0,
+			'Ingles' => 0,
+			'Laboratorio Contable' => 0,
+			'Lengua Castellana' => 0,
+			'Matematicas' => 0,
+			'Mercadeo' => 0,
+			'Quimica' => 0,
+			'Tecnicas y Gestion' => 0,
+			'Tecnologia e Informatica' => 0,
+			'Trigonometria' => 0
+				
+		);
+	}
+	
+	function add_hours($subject, $grade, $hours){
+		$this->subjects[$subject] += $hours;
+		if($grade < 6)
+			$this->levelhrs['Primaria'] += $hours;
+		else if($grade > 5 && $grade < 10)
+			$this->levelhrs['Secundaria'] += $hours;
+		else
+			$this->levelhrs['Media'] += $hours;
+	}
+	
+	function echo_all(){
+		echo "<table>
+		<tr>
+		<td> $this->fname </td><td> $this->lname </td><td> ";
+		foreach(array_keys($this->subjects, max($this->subjects)) as $v)
+				echo $v." </td><td> ";
+		foreach(array_keys($this->levelhrs, max($this->levelhrs)) as $v)
+				echo $v." </td>";
+				
+		echo "</tr>
+		</table>";
+	}
+}
+
+function character_academico(){
+	global $dbh;
+	$grade = 1;
+	
+	$collection = array();
+	$snl = "SELECT codcar,`prof-nom` as fname,`prof-ap` as lname,materia,grado,`weekly-hours` as hours FROM `carga-academica` JOIN `intensidad-horaria` ON codmat = cod where cod = 45";
+	$huzz = new sql($dbh, $snl);
+	$huzz->ex();
+	while($grade < 12){
+		echo "<br> $grade <br>"; //debug
+			foreach($huzz->exed as $v => $k){
+				echo "$v : ".array_keys($k, 'Olga')." : ".$k['fname']."<br>";				
+			}
+			
+		$grade++;
+		echo "<br><br>";
+	}
+
+}
 /*
+character_academico();
+/**/
+
+
+/*;
+
+/**//*
 $vars = array(
 		':year' => 2005,
 		':month' => 7,
@@ -340,3 +516,4 @@ $quicky->pcolumns('id', 'name', 'lname', 'dob');
 /**/
 
 // TODO query to find in which grade teacher spend the most hours, and then say that they teach in that grade.
+?>

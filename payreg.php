@@ -22,6 +22,7 @@ Pay Date<input type="date" name="paydate"> <br>
 <a href="fillemptystudentinfo.php">Click here to update student info</a><br>
 <a href="paystats.php">Click here to check stats on delincuent student accounts</a><br>
 <a href="getbirthdays.php">Click here to check age stats on each grade</a><br>
+<a href="DANE.php">Click here to get DANE</a><br>
 
 <script>
 			document.getElementById("next").focus();

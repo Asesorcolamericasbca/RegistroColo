@@ -162,7 +162,43 @@ $quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 /**/
 
+$xa = array (
+		'Administracion' => 0,
+		'Algebra' => 0,
+		'Artistica' => 0,
+		'Biologia' => 0,
+		'Calculo' => 0,
+		'Ciencias Economicas y Politicas' => 0,
+		'Ciencias Naturales' => 0,
+		'Ciencias Sociales' => 0,
+		'Contabilidad' => 0,
+		'Educacion Etica y Valores' => 0,
+		'Educacion Fisica' => 0,
+		'Educacion Religiosa' => 0,
+		'Estadistica' => 10,
+		'Filosofia' => 0,
+		'Fisica' => 0,
+		'Geometria' => 0,
+		'Ingles' => 0,
+		'Laboratorio Contable' => 0,
+		'Lengua Castellana' => 0,
+		'Matematicas' => 0,
+		'Mercadeo' => 0,
+		'Quimica' => 0,
+		'Tecnicas y Gestion' => 0,
+		'Tecnologia e Informatica' => 20,
+		'Trigonometria' => 0
 
+);
+
+$x = max($xa);
+
+echo $x;
+
+echo " <-- max value, and its key is: ";
+foreach(array_keys($xa, $x) as $v){
+	echo $v;
+}
 
 #######################################
 #######################################
