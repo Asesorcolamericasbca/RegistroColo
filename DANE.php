@@ -368,7 +368,7 @@ function everyone_else(){
 
 
 ////////////////////////////////
-
+/*
 school_data($dbh);
 echo $divider . $divider;
 echo $msg;
@@ -408,7 +408,7 @@ echo $divider;
 
 print_ages($dbh);
 grade_hours($dbh);
-/**//*
+/**/
 
 class teacher{
 	function __construct($fname,$lname){
@@ -474,27 +474,78 @@ class teacher{
 	}
 }
 
+/*
 function character_academico(){
 	global $dbh;
 	$grade = 1;
+	$gender = 1;
+	
+	$cols=columnlist('codcar','`prof-nom` as fname','`prof-ap` as lname','materia','grado','`weekly-hours` as hours');
+	$pcols = array('codcar','fname','lname','materia','grado','hours');
 	
 	$collection = array();
-	$snl = "SELECT codcar,`prof-nom` as fname,`prof-ap` as lname,materia,grado,`weekly-hours` as hours FROM `carga-academica` JOIN `intensidad-horaria` ON codmat = cod where cod = 45";
-	$huzz = new sql($dbh, $snl);
-	$huzz->ex();
 	while($grade < 12){
 		echo "<br> $grade <br>"; //debug
-			foreach($huzz->exed as $v => $k){
-				echo "$v : ".array_keys($k, 'Olga')." : ".$k['fname']."<br>";				
-			}
+		
+		if($gender == 3)
+			$gender = 1;
+		
+		$snl = "SELECT $cols FROM `carga-academica`
+		JOIN `intensidad-horaria` ON codmat = cod
+		JOIN `profesores-listado` ON codpro = codprof
+		WHERE gender = $gender AND grado = $grade AND incluir = 'SI'";
+		$huzz = new sql($dbh, $snl);
+		$huzz->ex();
+		
 			
+		// good block : prints everything from the query
+		foreach($huzz->exed as $v){ 
+			foreach ($pcols as $i){
+				echo "v : $i = $v[$i] <br> ";
+			}	
+			echo '<br>';
+		} 
+		// end good block
+		
 		$grade++;
 		echo "<br><br>";
 	}
 
 }
-/*
-character_academico();
+
+character_academico(); */
+	
+		$fn = array();
+		$ln = array();
+		$counter = 0;
+		
+		$cols=columnlist('codcar','`prof-nom` as fname','`prof-ap` as lname','materia','grado','`weekly-hours` as hours');
+		$pcols = array('codcar','fname','lname','materia','grado','hours');
+		
+		$g = "SELECT nom,ap FROM `profesores-listado` WHERE incluir = 'SI'";
+		
+		$m1 = "SELECT $cols FROM `carga-academica`
+		JOIN `intensidad-horaria` ON codmat = cod
+		JOIN `profesores-listado` ON codpro = codprof
+		WHERE gender = $gender AND grado = $grade AND incluir = 'SI'";
+		$m2 = 
+		$m3 = 
+		
+		$thing = $dbh->query($g);
+		/*
+		foreach($thing as $h){
+			array_push($fn, $h['nom']);
+			array_push($ln, $h['ap']);
+		}*/
+		/*
+		while (isset($fn[$counter])){
+			echo $fn[$counter].' '.$ln[$counter].'<br>';
+			$counter++;
+		}
+			*/
+		
+		
+		
 /**/
 
 

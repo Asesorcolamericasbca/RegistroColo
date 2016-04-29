@@ -162,6 +162,7 @@ $quicky->pcolumns('id', 'name', 'lname', 'dob');
 
 /**/
 
+/*
 $xa = array (
 		'Administracion' => 0,
 		'Algebra' => 0,
@@ -199,6 +200,15 @@ echo " <-- max value, and its key is: ";
 foreach(array_keys($xa, $x) as $v){
 	echo $v;
 }
+*/
+
+$q = $dbh->query('SELECT * FROM student');
+
+$n = $q->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($n as $h)
+	echo $h;
+
 
 #######################################
 #######################################

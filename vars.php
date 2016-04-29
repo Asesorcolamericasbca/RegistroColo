@@ -60,6 +60,18 @@ class sql{
 		$this->exed->execute();
 	}
 	
+	function fetchAll($x){
+		return var_dump($this->obj->query($this->sql)->fetchAll());
+	}
+	
+	function fetchObj($x){
+		return var_dump($this->obj->query($this->sql)->fetchAll(PDO::FETCH_OBJ));
+	}
+	
+	function fetchAss($x){
+		return var_dump($this->obj->query($this->sql)->fetchAll(PDO::FETCH_ASSOC));
+	}
+	
 	#### Trying to make it print the tables from within a single object
 	/*
 	function pcolumns(){
