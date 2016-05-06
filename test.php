@@ -202,13 +202,27 @@ foreach(array_keys($xa, $x) as $v){
 }
 */
 
+/*
+
 $q = $dbh->query('SELECT * FROM student');
 
 $n = $q->fetchAll(PDO::FETCH_ASSOC);
 
 foreach($n as $h)
 	echo $h;
+*/
 
+$quark = 66;
+
+$set = function(){
+	global $quark, $typo;
+	$quark = 4;
+	$typo = 'sqwuat';
+};
+
+$set();
+echo $quark;
+echo $typo;
 
 #######################################
 #######################################
