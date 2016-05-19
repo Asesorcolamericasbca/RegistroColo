@@ -1,7 +1,11 @@
 <?php
+header("Content-Type: text/html; charset=WINDOWS-1252");
+setlocale(LC_TIME, 'Spanish_Colombia.1252');
 
 include('dbcreds.php');
 
+
+$to_correct_staids = array ();
 
 
 class sql{

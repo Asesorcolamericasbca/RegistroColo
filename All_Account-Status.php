@@ -3,7 +3,7 @@
 include('vars.php');
 
 function getAmount($grade){
-	
+
 	if ($grade == 1){
 		$amount = 176025;
 	}elseif ($grade == 2){
@@ -15,7 +15,7 @@ function getAmount($grade){
 	}elseif ($grade > 9 && $grade < 12){
 		$amount = 211499;
 	}
-	
+
 	return $amount;
 }
 
@@ -36,8 +36,8 @@ $monthspaid = array(
 
 
 $sql = 'SELECT enr.eid,sta.aid,enrollment_year,name,lname,enr.grade,balance,total
-		FROM staccount AS sta 
-		JOIN enrollment AS enr ON enr.eid = sta.eid 
+		FROM staccount AS sta
+		JOIN enrollment AS enr ON enr.eid = sta.eid
 		JOIN rate ON grade_id = enr.grade
         JOIN (SELECT SUM(amount) AS total,aid FROM `transaction` GROUP BY aid) as pay ON pay.aid = sta.aid
 		JOIN student AS stu ON stu.id = enr.id
@@ -51,12 +51,8 @@ $exec->execute();
 $language = array ('English', 'Spanish');
 $selectedlanguage = 1;
 
-if($language[$selectedlanguage] == 'English')
-	echo '<h3>Accounts that are one month or more behind in payment</h3>';
-else if($language[$selectedlanguage] == 'Spanish')
-	echo '<h3>Cuentas que estsan atrasados uno o mas meses</h3>';
 
-?> 
+?>
 
 <style>
 
@@ -78,6 +74,15 @@ text-align: right;
 <table>
 
 <?php
+
+if($language[$selectedlanguage] == 'English' && $_GET['setting'] == 2 || $language[$selectedlanguage] == 'English' && $_GET['setting'] == 4)
+	echo '<h3>Accounts that are one month or more behind in payment</h3>';
+else if($language[$selectedlanguage] == 'Spanish' && $_GET['setting'] == 2 || $language[$selectedlanguage] == 'Spanish' && $_GET['setting'] == 4)
+	echo '<h3>Cuentas que estsan atrasados uno o mas meses</h3>';
+else if ($language[$selectedlanguage] == 'English' && $_GET['setting'] == 1 || $language[$selectedlanguage] == 'English' && $_GET['setting'] == 3)
+	echo '<h3>Accounts that are two or more months behind in payment</h3>';
+else if ($language[$selectedlanguage] == 'Spanish' && $_GET['setting'] == 2 || $language[$selectedlanguage] == 'Spanish' && $_GET['setting'] == 4)
+	echo '<h3>Cuentas que estsan atrasados dos o mas meses</h3>';
 
 if($language[$selectedlanguage] == 'English')
 	echo '<tr style="font-weight:bold">
@@ -102,13 +107,8 @@ else if($language[$selectedlanguage] == 'Spanish')
 			<td># Falta</td>
 			</tr>';
 
-	
-$schooltotalowed = 0;
 $gradetotalowed = 0;
-$totalpaid = 0;
-
-$switch = 1;
-
+	
 foreach ($exec as $row) {
 	// (SUm of transactions) - (what they should've paid) == $totalpaid - $amountowed
 	
@@ -119,15 +119,15 @@ foreach ($exec as $row) {
 			*/
 			if(isset($gradetotalowed))
 				echo '<tr><td colspan=6 class="boldy">Monto total faltante en el grado</td><td class="boldy righty" colspan= 2>'.$grade_owed.'</td></tr>';
-			
+					
 			echo '<tr><td colspan=8 style="text-align:center">---------------------------------------------------------------------------------------------------------------------</td></tr>';
 			$grade = $row['grade'];
 			$gradetotalowed = 0;
-			
+					
 		}
-        		
+	
 	}
-		
+	
 	$grade = $row['grade'];
 	$amount = getAmount($grade);
 	
@@ -144,7 +144,7 @@ foreach ($exec as $row) {
 		$stotal = $amount*$counter;
 		$counter += 1;
 	}
-	
+		
 	if($counter <= 0)
 	{
 		$counter = 0;
@@ -154,16 +154,16 @@ foreach ($exec as $row) {
 		$counter -= 1;
 	}
 	
-	$shorten = $monthspaid[$counter]; // howmany months 
+	$shorten = $monthspaid[$counter]; // howmany months
 	
 	$dateObj=DateTime::createFromFormat('!m', $shorten);
-	$mydateinEnglish=$dateObj->format('M');
+	$mydateinEnglish=$dateObj->format('M'); // for month in 3 letters in English (vanilla PHP locale)
+	//$mydate=$dateObj->format('m'); // for month in digits
+	
+	$mydate = ucfirst(gmstrftime('%b', gmmktime(0,0,0,$shorten+1,0,0)));
 	
 	
-	$mydate = ucfirst(gmstrftime('%b', gmmktime(0,0,0,$shorten+1,0,0))); // in Colombia locale time (locale+charset defined in vars.php)
 	
-	
-
 	//works fine, no changes needed
 	
 	$u = function(){
@@ -202,90 +202,66 @@ foreach ($exec as $row) {
 	
 	
 	$newgay = function(){
-		
+	
 		global $dbh, $amount, $shorten, $currentaid, $amountdue, $gradetotalowed, $schooltotalowed, $totalpaid, $totalowed;
-		
+	
 		// get how much they've paid
 		$secky = $dbh->prepare('SELECT SUM(amount) FROM `transaction` WHERE aid = :a');
 		$secky->bindParam(':a', $currentaid, PDO::PARAM_INT);
 		$secky->execute();
 		$totalpaid = $secky->fetchColumn();
-		
+	
 		// we start on February, hence, the '-1'
 		// how much they should've paid
 		$amountdue = ((idate('m')-1) * $amount);
-		
+	
 		$totalowed = $amountdue - $totalpaid;
-		
+	
 		// echo '<tr><td colspan=2>Monto total faltante</td><td>'.$totalowed.'</td></tr>';
-		
+		if($shorten < idate('m')){	
 		$gradetotalowed += $totalowed;
-		
+	
 		$schooltotalowed += $totalowed;
-		
+		}
 	};
 	
 	$gay = function($x){
-			
+				
 		return $x;
 	};
-
+	
 	
 	/**/ // set switch to 1 to enable listing only students that owe 2 or more payments
-	     // unset switch, or set it = to null, to list all late accounts
+		// unset switch, or set it = to null, to list all late accounts
+	$switch = 2;
+	if(isset($_GET['setting']))
+		$switch = $_GET['setting'];
 	
-	/*
-	switch ($switch){
-		case $_GET['setting'] == null:
-			$switch = 1;
-			break;
-		case $_GET['setting'] == 1  || $_GET['setting'] == 'on':
-			$switch = 1;
-			break;
-		case $_GET['setting'] == 0 || $_GET['setting'] == 'off':
-			$switch = 0;
-			break;
-		default:
-			$switch = 1;
-			break;
-	}
-	*/
-	/*
-	if(!isset($_GET['setting']))
-	{
-		$switch = 1;
-	}
-	else if ($_GET['setting'] == 'on' )
-	{
-		$switch = 1;
-	}
-	else if ($_GET['setting'] == 'off' )
-	{
-		$switch = 0;
-	}
-	else
-	{
-		$switch = 1;
-	}
-		*/
-	
-	if($switch == 1)
+	if($switch == 1 || $switch == 3)
 	{
 		if($shorten < idate('m')-1)
 		{
-		$gay($u()); 
+		$gay($u());
 		$gay($newgay());
-		} 
+		}
+	}
+	else if($switch == 2 || $switch == 4)
+	{
+		if($shorten < idate('m'))
+		{
+		$gay($u());
+		$gay($newgay());
+		}
 	}
 	else
 	{
-		$gay($u());
-		$gay($newgay());
+	$gay($u());
+	$gay($newgay());
 	}
 	
 	
 	$grade_owed = number_format($gradetotalowed, 2, ',', ".");
-		
+	
 	unset($u);
 	unset($gay);
 	unset($newgay);
@@ -304,30 +280,12 @@ $grade = null;
 
 </table>
 
-
 <?php 
 
-$exec = null;
+if($switch == 3 || $switch == 4 || $switch == 5)
+{
 
-$newsql = 'SELECT enr.eid,sta.aid,enrollment_year,name,lname,enr.grade,balance
-		FROM staccount AS sta 
-		JOIN enrollment AS enr ON enr.eid = sta.eid 
-		JOIN rate ON grade_id = enr.grade
-        JOIN student AS stu ON stu.id = enr.id
-        WHERE enrollment_year = YEAR(SYSDATE()) AND enr.status = 1 AND balance = (rate*10)
-';
-
-$exec = $dbh->prepare($newsql);
-$exec->execute();
-
-
-if($language[$selectedlanguage] == 'English')
-	echo '<br><br><h3>Accounts that do not yet have any registered transactions</h3> <br><br>';
-else if($language[$selectedlanguage] == 'Spanish')
-	echo '<br><br><h3>Cuentas que no llevan pago registrado</h3> <br><br>';
-
-?>
-
+	echo '
 <table>
 
 <tr style="font-weight:bold">
@@ -338,11 +296,30 @@ else if($language[$selectedlanguage] == 'Spanish')
 <td>Year</td>
 <td>Balance</td>
 </tr>
+';
+	
+	$exec = null;
+	
+	$newsql = 'SELECT enr.eid,sta.aid,enrollment_year,name,lname,enr.grade,balance
+		FROM staccount AS sta
+		JOIN enrollment AS enr ON enr.eid = sta.eid
+		JOIN rate ON grade_id = enr.grade
+        JOIN student AS stu ON stu.id = enr.id
+        WHERE enrollment_year = YEAR(SYSDATE()) AND enr.status = 1 AND balance = (rate*10)
+		';
+	
+	$exec = $dbh->prepare($newsql);
+	$exec->execute();
+	
+	
+	if($language[$selectedlanguage] == 'English')
+		echo '<br><br><h3>Accounts that do not yet have any registered transactions</h3> <br><br>';
+	else if($language[$selectedlanguage] == 'Spanish')
+		echo '<br><br><h3>Cuentas que no llevan pago registrado</h3> <br><br>';
 
-<?php 
 
 $gradetotalowed = 0;
-
+	
 foreach ($exec as $row) {
 	
 	if(isset($grade)){
@@ -377,10 +354,18 @@ echo '<tr><td class="boldy" colspan=4; >Monto total faltante en el grado</td><td
 echo '<tr><td colspan=8 style="text-align:center">---------------------------------------------------------------------------------------------------------------------</td></tr>';
 echo '<tr><td class="boldy" colspan=4>Monto total faltante en el colegio </td><td class="boldy righty" colspan= 2>'.$school_owed.'</td></tr>';
 
+
+
+
+
+echo '</table>';
+
+}
+
+
 ?>
-
-
-
-</table>
-
+<br><br>
 <a href='paystats.php'>check payment statistics</a>
+
+
+

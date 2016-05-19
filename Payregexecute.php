@@ -80,9 +80,10 @@ if(!$_POST){
 	
 	$aid=$_POST['aid'];
 	echo "Payment successfully registered to account $aid".'<br>';
-		
 	
-	echo '<a id="next" href="transactions.php?aid='.$aid.'"> check account</a><br><br>
+	$_POST['thelastmonthpaidfor'];
+	
+	echo '<a id="next" href="transactions.php?aid='.$aid.'&thelastmonthpaidfor='.$_POST['thelastmonthpaidfor'].'"> check account</a><br><br>
 			
 			<script>
 			document.getElementById("next").focus();

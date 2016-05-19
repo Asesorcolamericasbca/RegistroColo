@@ -211,7 +211,7 @@ $n = $q->fetchAll(PDO::FETCH_ASSOC);
 foreach($n as $h)
 	echo $h;
 */
-
+/*
 $quark = 66;
 
 $set = function(){
@@ -223,6 +223,126 @@ $set = function(){
 $set();
 echo $quark;
 echo $typo;
+*/
+/*
+$shorten = 5;
+$dateObj=DateTime::createFromFormat('!m', $shorten);
+$mydate=$dateObj->format('m');
+if(is_int($mydate))
+	echo "it's an int".'<br>';
+else if(is_string($mydate))
+	echo "it's a string".'<br>';
+else
+	echo "it's neither".'<br>';
+
+echo $mydate.'<br>';
+echo gmstrftime('%b', gmmktime(0,0,0,$mydate,0,0));
+*/
+
+
+/* Report a day-by-day total of money that came in within the specified month and day range
+*/
+
+function qdate($month){
+	return mktime(0,0,0,2,0,idate('y'));
+}
+
+
+
+
+
+echo gmdate('O'), "<br>";
+echo date('O'), "<br>";
+echo date('t', mktime(0,0,0,2,0,idate('y')));
+
+
+$sql = 'SELECT SUM(amount) AS monto FROM `transaction` AS tra WHERE MONTH(paydate) = :month AND DAY(paydate) = :day';
+
+$pickedmonth = 4;
+$firstday = 6;
+
+echo '<h2>Montos totales de '.ucfirst(gmstrftime('%b', gmmktime(0,0,0,$pickedmonth+1,0,0))).' '.$firstday.' a '.ucfirst(gmstrftime('%b', gmmktime(0,0,0,idate('m')+1,0,0))).' '.date('d').'</h2>';
+
+// echo idate('m');
+
+$hookk = new DateTime(""); 
+
+if (isset($vill)) {
+	if(is_int($vill))
+		echo 'an int';
+	else 
+		echo 'is not';
+}
+
+$total = 0;
+
+if(isset($_GET['setting'])){
+	$switch = $_GET['setting'];
+	//echo $switch;
+}
+
+
+
+echo '<style>
+		table, tr, td{
+		border: grey dotted 1px;
+		}
+		</style>
+		
+		<table>';
+
+for($month = $pickedmonth; $month <= ($pickedmonth + 1); $month++)
+{
+	if($month == (idate('m') - 1))
+	{
+		for($day = 6; $day <= idate('t', mktime(0,0,0,$pickedmonth+1,0,0)); $day++)
+		{
+			$exec = $dbh->prepare($sql);
+			$exec->bindParam(':month', $month, PDO::PARAM_INT);
+			$exec->bindParam(':day', $day, PDO::PARAM_INT);
+			$exec->execute();
+			foreach($exec as $r)
+			{
+				echo '<tr>';
+				echo '<td>'."dia $day "."de ".'</td><td>'.gmstrftime('%b', gmmktime(0,0,0,$month+1,0,0)).' = </td><td>';
+				echo number_format($r['monto'], 2, ',', ".").'</td>';
+				echo '<tr>';
+				$total += $r['monto']; 
+			}
+		}
+		
+	}
+	
+	if (isset($switch))
+	{
+		if($month == ($pickedmonth+1) && $switch == 1)
+		{
+			for($day = 1; $day <= 5; $day++)
+			{
+				$exec = $dbh->prepare($sql);
+				$exec->bindParam(':month', $month, PDO::PARAM_INT);
+				$exec->bindParam(':day', $day, PDO::PARAM_INT);
+				$exec->execute();
+				foreach($exec as $r)
+				{
+					echo '<tr>';
+					echo '<td>'."dia $day "."de ".'</td><td>'.gmstrftime('%b', gmmktime(0,0,0,$month+1,0,0)).' = </td><td>';
+					echo number_format($r['monto'], 2, ',', ".").'</td>';
+					echo '<tr>';
+					$total += $r['monto']; 
+				}
+			}
+		}
+}
+}
+
+echo "<tr><td style='border: none;' colspan=3></td></tr>
+		<tr style='font-weight: bold;'><td>Total :</td><td style='text-align: right;' colspan = 2>".number_format($total, 2, ',', ".").'</td>';
+
+echo '<table>';
+
+
+
 
 #######################################
 #######################################

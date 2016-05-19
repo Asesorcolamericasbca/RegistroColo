@@ -318,6 +318,7 @@ if($_POST){
 			<input type="hidden" name="aid" value="'.$aid.'">
 			<input type="hidden" name="date" value="'.$date.'">
 			<input type="hidden" name="grade" value="'.$grade.'">
+			<input type="hidden" name="thelastmonthpaidfor" value="'.($shorten+1).'">
 			<table>
 			<tr><td>Amount</td><td>Months (Qty)</td></tr>
 			<td><input type="number" name="amount" value="'.$amount.'"></td>
@@ -329,6 +330,7 @@ if($_POST){
 			<script>
 			document.getElementById("next").focus();
 			</script>';
+	 
 			
 	  
 	echo '<a href="payreg.php"> check another</a><br><br>';

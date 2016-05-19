@@ -75,6 +75,17 @@ $sql="  SELECT $sta.aid,$stu.lname,$stu.name,$enr.grade,$sta.num_talonario,$tra.
 		
 		}
 		
+		$nix = $_GET['thelastmonthpaidfor'];
+		
+		if($nix >= date('n'))
+			$style='style="color:Blue; font-weight: bold;"';
+		else
+			$style='style="color:Red; font-weight: bold;"';
+		
+		
+		$stwing = ucfirst(gmstrftime('%b', gmmktime(0,0,0,$nix+1,0,0)));
+		
+		echo '<tr><td colspan = 3>This account is paid til: </td><td '.$style.'>'.$stwing.'</td></tr>';
 		
 		echo '</table>';
 		
