@@ -97,7 +97,8 @@ header("Content-Type: text/html; charset=WINDOWS-1252");
 		<td rowspan="3" colspan="4" valign="bottom"
 		style="font-weight: bold; 
 		text-align: center; 
-		padding-bottom: 4px;">Pepsi</td>
+		font-size: 14;
+		padding-bottom: 0px;">No.04-02</td>
 	</tr>
 	<tr>
 	</tr>
@@ -123,29 +124,29 @@ header("Content-Type: text/html; charset=WINDOWS-1252");
 		-webkit-print-color-adjust:exact;
 		text-align: center; 
 		font-weight: bold;">Fecha</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td style="text-align: center;">6</td>
+		<td style="text-align: center;">4</td>
+		<td style="text-align: center;">2016</td>
+		<td style="text-align: right;">$ 1.222.544</td>
 	</tr>
 	<tr>
 		<td style="font-weight: bold;">Pagado a</td>
-		<td colspan="7"></td>
+		<td colspan="7">ANA LYDA LOPEZ</td>
 	</tr>
 	<tr>
 		<td style="font-weight: bold;" colspan="2">Por concepto de</td>
-		<td colspan="5"></td>
-		<td></td>
+		<td colspan="5">VALOR SUELDO MES MAYO</td>
+		<td style="text-align: right;">$ 1.200.000</td>
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td colspan="5"></td>
-		<td></td>
+		<td colspan="5">TRANSPORTE</td>
+		<td style="text-align: right;">$ 77.700</td>
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td colspan="5"></td>
-		<td></td>
+		<td colspan="5">DTO AUTORIZADO SEGURIDAD SOCIAL</td>
+		<td style="text-align: right;">$ 55.156</td>
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
@@ -161,7 +162,7 @@ header("Content-Type: text/html; charset=WINDOWS-1252");
 		<td  colspan="8">La suma de: (en letras)</td>
 	</tr>
 	<tr>
-		<td  colspan="8">&nbsp;</td>
+		<td  colspan="8">UN MILLON DOSCIENTOS VEINTIDOS MIL QUINIENTOS CURENTA Y CUATRO PESOS MC&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan="6"></td>
@@ -201,21 +202,21 @@ header("Content-Type: text/html; charset=WINDOWS-1252");
 	<tr>
 		<td></td>
 		<td colspan="2">&nbsp;</td>
-		<td></td>
+		<td style="text-align: right;">$ 1.277.700</td>
 		<td colspan="2"></td>
-		<td style="padding: 2px; font-weight: bold;" rowspan="6" colspan="2" valign="top">Firma y sello del benficiario</td>
+		<td style="padding: 2px; font-weight: bold;" rowspan="6" colspan="2" valign="top">Firma y sello del beneficiario</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td style="text-align: center;" colspan="2">BANCO</td>
 		<td></td>
-		<td colspan="2"></td>
+		<td  style="text-align: right;" colspan="2">$ 1.222.544</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td style="text-align: center;" colspan="2">DESC AUT</td>
 		<td></td>
-		<td colspan="2"></td>
+		<td  style="text-align: right;" colspan="2">$ 55.156</td>
 	</tr>
 	<tr>
 		<td></td>
@@ -232,8 +233,8 @@ header("Content-Type: text/html; charset=WINDOWS-1252");
 	<tr>
 		<td></td>
 		<td colspan="2">&nbsp;</td>
-		<td></td>
-		<td colspan="2"></td>
+		<td style="text-align: right;" >$ 1.277.700</td>
+		<td  style="text-align: right;" colspan="2">$ 1.277.700</td>
 	</tr>
 	<tr style="font-weight: bold; text-align: center;">
 		<td style="text-align: center;" rowspan="4" colspan="2">Ir</td>
