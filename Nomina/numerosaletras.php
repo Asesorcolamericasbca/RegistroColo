@@ -142,7 +142,7 @@ function ciens($cientos) {
 			if ($digito_diez != 0 || $digito_uno != 0) {
 				$letra = unos ( $centenas / 100 ) . "cientos ";
 			} else {
-				$letra = unos ( $centenas / 100 ) . "cientos";
+				$letra = unos ( $centenas / 100 ) . "cientos"; // Something weird happens with the spacing... this fixes it
 			}
 			break;
 	}
@@ -333,6 +333,8 @@ function to_pesos($num){
 	}
 	
 }
+
+// echo to_pesos('97654238878956423158000000');
  
 // test numbers
 /*

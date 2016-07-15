@@ -512,8 +512,8 @@ function character_academico(){
 	}
 
 }
-
-character_academico(); */
+/*
+character_academico();
 	
 		$fn = array();
 		$ln = array();
@@ -567,4 +567,14 @@ $quicky->pcolumns('id', 'name', 'lname', 'dob');
 /**/
 
 // TODO query to find in which grade teacher spend the most hours, and then say that they teach in that grade.
+
+		
+		school_data($dbh);
+		print_ages($dbh);
+		grade_hours($dbh);
+		escalafones($dbh);
+		admins();
+		medics();
+		everyone_else();
+		
 ?>

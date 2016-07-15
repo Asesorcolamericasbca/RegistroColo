@@ -258,7 +258,7 @@ echo date('t', mktime(0,0,0,2,0,idate('y')));
 
 $sql = 'SELECT SUM(amount) AS monto FROM `transaction` AS tra WHERE MONTH(paydate) = :month AND DAY(paydate) = :day';
 
-$pickedmonth = 4;
+$pickedmonth = 5;
 $firstday = 6;
 
 echo '<h2>Montos totales de '.ucfirst(gmstrftime('%b', gmmktime(0,0,0,$pickedmonth+1,0,0))).' '.$firstday.' a '.ucfirst(gmstrftime('%b', gmmktime(0,0,0,idate('m')+1,0,0))).' '.date('d').'</h2>';
