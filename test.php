@@ -258,8 +258,11 @@ echo date('t', mktime(0,0,0,2,0,idate('y')));
 
 $sql = 'SELECT SUM(amount) AS monto FROM `transaction` AS tra WHERE MONTH(paydate) = :month AND DAY(paydate) = :day';
 
-$pickedmonth = 5;
+$pickedmonth = 10;
 $firstday = 6;
+
+$limit_month = 11;
+$limit_day_of_limit_month = 8;
 
 echo '<h2>Montos totales de '.ucfirst(gmstrftime('%b', gmmktime(0,0,0,$pickedmonth+1,0,0))).' '.$firstday.' a '.ucfirst(gmstrftime('%b', gmmktime(0,0,0,idate('m')+1,0,0))).' '.date('d').'</h2>';
 
@@ -295,7 +298,8 @@ for($month = $pickedmonth; $month <= ($pickedmonth + 1); $month++)
 {
 	if($month == (idate('m') - 1))
 	{
-		for($day = 6; $day <= idate('t', mktime(0,0,0,$pickedmonth+1,0,0)); $day++)
+		echo idate('t', mktime(0,0,0,$pickedmonth+1,0,0));
+		for($day = 1; $day <= idate('t', mktime(0,0,0,$pickedmonth+1,0,0)); $day++)
 		{
 			$exec = $dbh->prepare($sql);
 			$exec->bindParam(':month', $month, PDO::PARAM_INT);
@@ -310,7 +314,21 @@ for($month = $pickedmonth; $month <= ($pickedmonth + 1); $month++)
 				$total += $r['monto']; 
 			}
 		}
-		
+		for($day = 1; $day <= $limit_day_of_limit_month; $day++)// because the last for loop would just stop after reaching the end of the first month
+		{
+			$exec = $dbh->prepare('SELECT SUM(amount) AS monto FROM `transaction` AS tra WHERE MONTH(paydate) = :month AND DAY(paydate) = :day');
+			$exec->bindParam(':month', $limit_month, PDO::PARAM_INT);
+			$exec->bindParam(':day', $day, PDO::PARAM_INT);
+			$exec->execute();
+			foreach($exec as $r)
+			{
+				echo '<tr>';
+				echo '<td>'."dia $day "."de ".'</td><td>'.gmstrftime('%b', gmmktime(0,0,0,$limit_month+1,0,0)).' = </td><td>';
+				echo number_format($r['monto'], 2, ',', ".").'</td>';
+				echo '<tr>';
+				$total += $r['monto'];
+			}
+		}
 	}
 	
 	if (isset($switch))

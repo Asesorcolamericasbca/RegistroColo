@@ -108,7 +108,9 @@ else if($language[$selectedlanguage] == 'Spanish')
 			</tr>';
 
 $gradetotalowed = 0;
-	
+$grade_total_balance = 0;
+$school_total_balance = 0;
+
 foreach ($exec as $row) {
 	// (SUm of transactions) - (what they should've paid) == $totalpaid - $amountowed
 	
@@ -117,12 +119,16 @@ foreach ($exec as $row) {
 			/*if(isset($unpaidmonths))
 				echo '<tr><td>'.$unpaidmonths.'</td><td> '.$stotal.' </td><td> '.($currentbalance - $stotal).' </td><td> '.$totalpaid.' </td></tr>';
 			*/
-			if(isset($gradetotalowed))
+			if(isset($gradetotalowed) && isset($grade_total_balance_fmt))
+			{
 				echo '<tr><td colspan=6 class="boldy">Monto total faltante en el grado</td><td class="boldy righty" colspan= 2>'.$grade_owed.'</td></tr>';
+				echo '<tr><td colspan=6 class="boldy">Balance total faltante en el grado</td><td class="boldy righty" colspan= 2>'.$grade_total_balance_fmt.'</td></tr>';
+			}
 					
 			echo '<tr><td colspan=8 style="text-align:center">---------------------------------------------------------------------------------------------------------------------</td></tr>';
 			$grade = $row['grade'];
 			$gradetotalowed = 0;
+			$grade_total_balance = 0;
 					
 		}
 	
@@ -203,7 +209,7 @@ foreach ($exec as $row) {
 	
 	$newgay = function(){
 	
-		global $dbh, $amount, $shorten, $currentaid, $amountdue, $gradetotalowed, $schooltotalowed, $totalpaid, $totalowed;
+		global $dbh, $amount, $shorten, $currentaid, $amountdue, $gradetotalowed, $schooltotalowed, $totalpaid, $totalowed, $grade_total_balance, $school_total_balance, $currentbalance;
 	
 		// get how much they've paid
 		$secky = $dbh->prepare('SELECT SUM(amount) FROM `transaction` WHERE aid = :a');
@@ -223,6 +229,8 @@ foreach ($exec as $row) {
 	
 		$schooltotalowed += $totalowed;
 		}
+		$grade_total_balance += $currentbalance;
+		$school_total_balance += $currentbalance;
 	};
 	
 	$gay = function($x){
@@ -261,6 +269,7 @@ foreach ($exec as $row) {
 	
 	
 	$grade_owed = number_format($gradetotalowed, 2, ',', ".");
+	$grade_total_balance_fmt = number_format($grade_total_balance, 2, ',', ".");
 	
 	unset($u);
 	unset($gay);
@@ -268,10 +277,14 @@ foreach ($exec as $row) {
 	
 }
 $school_owed = number_format($schooltotalowed, 2, ',', ".");
+$school_total_balance_fmt = number_format($school_total_balance, 2, ',', ".");
 
 echo '<tr><td class="boldy" colspan=6; >Monto total faltante en el grado</td><td class="boldy righty" colspan= 2>'.$grade_owed.'</td></tr>';
+echo '<tr><td colspan=6 class="boldy">Balance total faltante en el grado</td><td class="boldy righty" colspan= 2>'.$grade_total_balance_fmt.'</td></tr>';
 echo '<tr><td colspan=8 style="text-align:center">---------------------------------------------------------------------------------------------------------------------</td></tr>';
 echo '<tr><td class="boldy" colspan=6>Monto total faltante en el colegio </td><td class="boldy righty" colspan= 2>'.$school_owed.'</td></tr>';
+echo '<tr><td class="boldy" colspan=6>Balance total faltante en el colegio </td><td class="boldy righty" colspan= 2>'.$school_total_balance_fmt.'</td></tr>';
+
 
 $schooltotalowed = 0;
 
