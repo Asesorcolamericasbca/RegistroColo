@@ -11,6 +11,9 @@ if(!$_POST){
 } else {
 	
 	// student name, grade, aid, eid
+	$datey = DateTime::createFromFormat('Y-m-d', $_POST['paydate']);
+	echo $datey->format('Y');
+	
 	
 	$cols = columnlist("$stu.name","$stu.lname","$enr.grade","$sta.aid","$sta.eid","$sta.num_talonario");
 	$pcols = array ("aid","lname","name","grade","eid","num_talonario");
@@ -61,7 +64,7 @@ if(!$_POST){
 						</td>
 				<td>'.$row["name"].'<input type="hidden" name="eid'.$counter.'" value="'.$row["eid"].'">
 						</td>
-				<td>'.$row["grade"].'
+				<td>'.$row["grade"].'<input type="hidden" name="datey" value="'.$datey.'">
 						</td>
 				<td>'.$row["eid"].'
 						</td>
