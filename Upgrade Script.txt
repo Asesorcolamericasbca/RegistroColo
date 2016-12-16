@@ -1,0 +1,119 @@
+
+Automatic enrollment and end of year processing (php needed, but the sql is done... see below, maybe you can script it to run on a set date)
+Auto-add brothers and sisters
+** Auto-populate sudent accounts (DONE!)
+Refactor code to be cleaner, use sessions, and to be more reliable
+Add batch processing pages and functions for adding students, and registering payments.
+
+
+The only tables I'm concerned with right now
+
+enrollment
+student accounts
+
+
+
+Upon adding a student, check for lastnames. If there is a student with the same last name with a different id, then automatically add a record for a sibling. Have a confirmation page where you make sure they're siblings.
+
+------------
+
+Matricula (rate equivalent; the list of costs that make up matricula)
+
+
+
+StudentMatriculaAccount (staccount equivalent; only one total)
+
+StudentMatriculaTransaction (transaction equivalent; checklist of payments. must be scripted such that brothers are exempted from ONE asociacion padres payment)
+
+------------
+
+
+
+
+
+-/## For enrollment table cloning
+
+DROP TABLE enrollment;
+SHOW CREATE TABLE enrollment;
+
+CREATE TABLE `enrollment2` (
+ `eid` int(11) NOT NULL AUTO_INCREMENT,
+ `id` int(11) NOT NULL,
+ `grade` int(11) DEFAULT NULL,
+ `grupo` int(11) NOT NULL,
+ `enr_date` date NOT NULL,
+ `prev_result` int(11) NOT NULL DEFAULT '1',
+ `status` int(11) NOT NULL DEFAULT '1',
+ PRIMARY KEY (`eid`),
+ KEY `id` (`id`),
+FOREIGN KEY (`id`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=860 DEFAULT CHARSET=latin1
+
+
+INSERT INTO `enrollment2` ( `eid`, `id`, `grade`, `grupo`, `enr_date`, `prev_result`, `status` ) SELECT `eid`, `id`, `grade`, `grupo`, `enr_date`, `prev_result`, `status` FROM enrollment
+
+####
+####
++/## For moving students up a year
+
+(Add column "year" to enrollment table)
+
+INSERT INTO enrollment (id, grade, grupo, enr_date, `year`, prev_result, `status`) SELECT id, grade+1, grupo, enr_date, `year`+1, prev_result, `status` FROM `enrollment` WHERE grade < 11 AND status = 1
+
+UPDATE `enrollment` SET enr_date = '2016-12-15' WHERE year = 2017
+
+
+####
+####
+####
+
+-------- separate academics section ----------
+
+
+
+
+SQL code
+
+
+
+
+Triggers
+
+
+;; New year pensions and bills (it was originally programmed in with php makre sure to disable it before adding the trigger)
+
+
+###
+## trigger sql script for account balance initialization
+###
+
+BEGIN 
+
+SET @enrollmentID = NEW.eid, @year = NEW.year, @grade = NEW.grade, @enr_date = NEW.enr_date;
+
+IF month(@enr_date) = 12 
+THEN 
+
+SELECT rate.rate * 10  
+FROM rate 
+WHERE rate.grade = @grade AND rate.enrollment_year = @year 
+INTO @newBalance; 
+INSERT INTO staccount (eid, balance) 
+VALUES (@enrollmentID, @newBalance); 
+
+ELSE
+
+SELECT rate.rate * (11 - MONTH(@enr_date))  
+FROM rate 
+WHERE rate.grade = @grade AND rate.enrollment_year = @year 
+INTO @newBalance; 
+INSERT INTO staccount (eid, balance) 
+VALUES (@enrollmentID, @newBalance); 
+
+END IF;
+
+END
+
+###
+###
+###
